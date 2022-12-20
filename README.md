@@ -45,7 +45,7 @@ Additionally, you may need to configure the `Option` key to behave like `Alt`. I
 
 Clone the repo into Neovim's installation folder (usually `/home/<usr>/.config/nvim`):
 ```bash
-git clone https://github.com/Jacarte/neovim-lua-config ~/.config/nvim
+git clone https://github.com/Jacarte/neovim-config.git ~/.config/nvim
 cd ~/.config/nvim
 ```
 
