@@ -40,7 +40,7 @@ vim.o.updatetime         = 300                          -- Delay until write to 
 vim.g.do_file_type_lua   = 1
 
 -- Disable default plugins
--- vim.g.loaded_netrwPlugin = false                     -- I can't remember what the issue was with this option
+vim.g.loaded_netrwPlugin = false                     -- I can't remember what the issue was with this option
 
 -- Python providers
 local pynvim_env        = "/.local/bin/pyenv/versions/pynvim/"

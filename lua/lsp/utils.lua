@@ -43,6 +43,8 @@ function M.common_on_attach(client, bufnr)
   bufnnoremap("<C-n>", "<Cmd>lua vim.diagnostic.goto_next()<CR>")
   bufnnoremap("<C-p>", "<Cmd>lua vim.diagnostic.goto_prev()<CR>")
 
+  -- Show documentation
+  bufnnoremap("<leader>h",  "<Cmd>lua vim.lsp.buf.hover()<CR>")
   -- Markdown preview TODO: make this conditional, but I also don't use it all that much
   -- bufnnnoremap("<leader>P", "<Cmd>Glow<CR>")
 
