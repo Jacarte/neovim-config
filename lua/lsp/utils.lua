@@ -12,6 +12,7 @@ function M.common_on_attach(client, bufnr)
   -- Set omnifunc
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
+
   -- Helper function
   local opts = {noremap = true, silent = true}
   local function bufnnoremap(lhs, rhs)
@@ -42,6 +43,8 @@ function M.common_on_attach(client, bufnr)
   -- Navigate diagnostics
   bufnnoremap("<C-n>", "<Cmd>lua vim.diagnostic.goto_next()<CR>")
   bufnnoremap("<C-p>", "<Cmd>lua vim.diagnostic.goto_prev()<CR>")
+  bufnnoremap("<leader>ga", "<Cmd>lua vim.lsp.buf.code_action()<CR>")
+
 
   -- Show documentation
   bufnnoremap("<leader>h",  "<Cmd>lua vim.lsp.buf.hover()<CR>")

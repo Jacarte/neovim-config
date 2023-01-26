@@ -2,6 +2,22 @@
 
 local non_language_ft = {'fugitive', 'startify'}
 
+local nvimbattery = {
+  function()
+    return require("battery").get_status_line()
+  end,
+  color = { fg = 'ffffff', gui='bold' },
+}
+
+local lsp_status = require('lsp-status');
+local lspconfig = require('lspconfig');
+
+lsp_status.register_progress()
+
+local function lsp()
+    return require('lsp-status').status()
+end
+
 require('lualine').setup({
   options = {
     theme = "tokyonight",
@@ -51,8 +67,9 @@ require('lualine').setup({
         sources = {'nvim_diagnostic'},
         sections = {'error', 'warn', 'info'},
       },
+      lsp,
     },
-    lualine_x = {'windows', 'tabs', 'encoding'},
+    lualine_x = { nvimbattery, 'windows', 'tabs', 'encoding'},
     lualine_y = {'progress'},
     lualine_z = {
       {function () return '' end},

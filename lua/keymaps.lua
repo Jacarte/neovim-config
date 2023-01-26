@@ -15,6 +15,9 @@ local inoremap = Utils.inoremap
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+-- quick edit
+nnoremap("<C-z>", ":undo ")
+
 
 -- kj to normal mode
 inoremap("kj", "<Esc>")
@@ -36,7 +39,9 @@ nnoremap("<C-l>", "<C-w>l")
 
 -- Switch buffers (needs nvim-bufferline)
 nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
-nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
+nnoremap("<S-TAB>", "<CMD>NvimTreeFocus<CR>")
+-- Commented out, Shift Tab to focus the file explorer
+-- nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
 
 -- Splits
 nnoremap("<leader>ws", ":split<CR>")
@@ -105,6 +110,11 @@ nnoremap("<leader>fg", "<Cmd>Telescope live_grep<CR>")
 
 -- File explorer
 nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
+
+-- Lazygit on floatterm
+-- It needs lazygit, brew install jesseduffield/lazygit/lazygit
+nnoremap("<leader>gw", "<Cmd>FloatermNew lazygit<CR>")
+nnoremap("<leader>ttt", "<Cmd>FloatermNew zsh<CR>")
 -- nnoremap("<leader>e", "<Cmd>RnvimrToggle<CR>")
 
 -- EasyAlign
