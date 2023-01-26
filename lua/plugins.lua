@@ -26,6 +26,11 @@ return require('packer').startup(function(use)
   -- Let Packer manage itself
   use({'wbthomason/packer.nvim', opt = true})
 
+  -- lsp status
+
+  use('nvim-lua/lsp-status.nvim')
+  -- Rust tools
+  use("simrat39/rust-tools.nvim")
   -- LSP server
   use({
     'neovim/nvim-lspconfig',
@@ -33,11 +38,13 @@ return require('packer').startup(function(use)
   })
   use 'williamboman/nvim-lsp-installer'  -- Helper for installing most language servers
 
+
   -- Autocomplete
   use({
     "hrsh7th/nvim-cmp",
     -- Sources for nvim-cmp
     requires = {
+      "hrsh7th/vim-vsnip",
       "hrsh7th/cmp-nvim-lsp",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
@@ -117,6 +124,7 @@ return require('packer').startup(function(use)
   use 'tpope/vim-surround'
   use 'tpope/vim-repeat'
   use 'junegunn/vim-easy-align'
+  use 'voldikss/vim-floaterm'
 
   -- Python formatting
   use "EgZvor/vim-black"
@@ -129,6 +137,12 @@ return require('packer').startup(function(use)
   -- Markdown
   use 'godlygeek/tabular'
   use 'ellisonleao/glow.nvim'
+
+
+  -- Rust LSP
+  -- use 'neoclide/coc.nvim'
+
+    -- "neovim/nvim-lspconfig",
 
   -- TOML Files
   use 'cespare/vim-toml'
@@ -149,6 +163,10 @@ return require('packer').startup(function(use)
   -- Themes
   use 'folke/tokyonight.nvim'
   use 'marko-cerovac/material.nvim'
+
+  use { 'justinhj/battery.nvim', requires = {{'kyazdani42/nvim-web-devicons'}, {'nvim-lua/plenary.nvim'}},
+    config = function() require('plugins.battery') end
+  }
 
   if packer_bootstrap then
     require('packer').sync()
