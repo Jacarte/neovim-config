@@ -16,6 +16,17 @@ for _, lsp in ipairs(servers) do
 end
 
 
+nvim_lsp["pyright"].setup({
+  capabilities = capabilities,
+  on_attach = common_on_attach,
+  settings={
+      python = {
+      pythonPath="/usr/bin/python3.9"
+      },
+      pyright = {}
+  }
+})
+
 require('lsp.rust')
 
 -- signature help hover

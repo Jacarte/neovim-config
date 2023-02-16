@@ -32,14 +32,19 @@ return require('packer').startup(function(use)
   -- Rust tools
   use("simrat39/rust-tools.nvim")
   -- LSP server
+  use "williamboman/mason.nvim"
+  use ({
+    "williamboman/mason-lspconfig.nvim",
+    config = function() require('plugins.mason-lspconfig') end,
+  })
+
   use({
     'neovim/nvim-lspconfig',
     config = function() require('plugins.lspconfig') end
   })
-  use 'williamboman/nvim-lsp-installer'  -- Helper for installing most language servers
 
-
-  -- Autocomplete
+  -- Use mason instead
+    -- Autocomplete
   use({
     "hrsh7th/nvim-cmp",
     -- Sources for nvim-cmp
@@ -94,8 +99,10 @@ return require('packer').startup(function(use)
 
   -- NvimTree
   use({
-    'kyazdani42/nvim-tree.lua',
-    requires = 'kyazdani42/nvim-web-devicons',
+    'nvim-tree/nvim-tree.lua',
+    requires = {
+      'nvim-tree/nvim-web-devicons', -- optional, for file icons
+    },
     config = function() require('plugins.nvimtree') end,  -- Must add this manually
   })
 
