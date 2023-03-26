@@ -26,7 +26,7 @@ return require('packer').startup(function(use)
   -- Let Packer manage itself
   use({'wbthomason/packer.nvim', opt = true})
 
-  -- lsp status
+ -- lsp status
 
   use('nvim-lua/lsp-status.nvim')
   -- Rust tools
@@ -125,6 +125,11 @@ return require('packer').startup(function(use)
     config = function() require('plugins.gitsigns') end
   })
 
+  -- copilot
+  use({'github/copilot.vim',
+      config = function() require('plugins.copilot') end
+    })
+
   -- Formatting
   use 'tpope/vim-commentary'
   use 'tpope/vim-unimpaired'
@@ -170,6 +175,20 @@ return require('packer').startup(function(use)
   -- Themes
   use 'folke/tokyonight.nvim'
   use 'marko-cerovac/material.nvim'
+
+  use({
+  "jackMort/ChatGPT.nvim",
+    config = function()
+      require("chatgpt").setup({
+        -- optional configuration
+      })
+    end,
+    requires = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "nvim-telescope/telescope.nvim"
+    }
+})
 
   use { 'justinhj/battery.nvim', requires = {{'kyazdani42/nvim-web-devicons'}, {'nvim-lua/plenary.nvim'}},
     config = function() require('plugins.battery') end
