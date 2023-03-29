@@ -150,7 +150,8 @@ return require('packer').startup(function(use)
   use 'godlygeek/tabular'
   use 'ellisonleao/glow.nvim'
 
-
+  -- floating terminals
+  use 'kassio/neoterm'
   -- Rust LSP
   -- use 'neoclide/coc.nvim'
 

@@ -5,6 +5,7 @@ local Utils = require('utils')
 
 -- local exprnnoremap = Utils.exprnnoremap
 local nnoremap = Utils.nnoremap
+local tnoremap = Utils.tnoremap
 local vnoremap = Utils.vnoremap
 -- local xnoremap = Utils.xnoremap
 local inoremap = Utils.inoremap
@@ -114,7 +115,11 @@ nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
 -- Lazygit on floatterm
 -- It needs lazygit, brew install jesseduffield/lazygit/lazygit
 nnoremap("<leader>gw", "<Cmd>FloatermNew lazygit<CR>")
-nnoremap("<leader>ttt", "<Cmd>FloatermNew zsh<CR>")
+
+-- To fix neoterm
+--:tnoremap <Esc> <C-\><C-n>
+tnoremap("<Esc>", "<C-\\><C-n>")
+-- nnoremap("<leader>ttt", "<Cmd>FloatermNew zsh<CR>")
 -- nnoremap("<leader>e", "<Cmd>RnvimrToggle<CR>")
 
 -- EasyAlign
