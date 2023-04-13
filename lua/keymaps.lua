@@ -7,6 +7,8 @@ local Utils = require('utils')
 local nnoremap = Utils.nnoremap
 local tnoremap = Utils.tnoremap
 local vnoremap = Utils.vnoremap
+local nmap = Utils.nmap
+local map = Utils.map
 -- local xnoremap = Utils.xnoremap
 local inoremap = Utils.inoremap
 -- local tnoremap = Utils.tnoremap
@@ -40,9 +42,9 @@ nnoremap("<C-l>", "<C-w>l")
 
 -- Switch buffers (needs nvim-bufferline)
 nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
-nnoremap("<S-TAB>", "<CMD>NvimTreeFocus<CR>")
+map("n", "E", "<CMD>NvimTreeFocus<CR>")
 -- Commented out, Shift Tab to focus the file explorer
--- nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
+nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
 
 -- Splits
 nnoremap("<leader>ws", ":split<CR>")
@@ -114,14 +116,36 @@ nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
 
 -- Lazygit on floatterm
 -- It needs lazygit, brew install jesseduffield/lazygit/lazygit
-nnoremap("<leader>gw", "<Cmd>FloatermNew lazygit<CR>")
+nnoremap("GW", "<Cmd>FloatermNew --height=0.8 --width=0.7 lazygit<CR>")
 
 -- To fix neoterm
 --:tnoremap <Esc> <C-\><C-n>
 tnoremap("<Esc>", "<C-\\><C-n>")
--- nnoremap("<leader>ttt", "<Cmd>FloatermNew zsh<CR>")
+nnoremap("<leader>ft", ":FloatermNew --name=float --height=0.8 --width=0.7 --autoclose=2 zsh <CR>")
+nnoremap("t", ":FloatermToggle float <CR>")
 -- nnoremap("<leader>e", "<Cmd>RnvimrToggle<CR>")
 
 -- EasyAlign
 -- xmap("ga", "<cmd>EasyAlign")
 -- nmap("ga", "<cmd>EasyAlign")
+--
+--
+-- vimspector
+-- nnoremap("<F9>", "<Cmd>call vimspector#Launch()<CR>")
+-- nnoremap("<F5>","<Cmd>VimspectorStepOver<CR>")
+-- nnoremap("<F8>", "<Cmd>call vimspector#Reset()<CR>")
+-- nnoremap("<F11>", "<Cmd>call vimspector#StepOver()<CR>")
+-- nnoremap("<F12>", "<Cmd>call vimspector#StepOut()<CR>")
+-- nnoremap("<F10>", "<Cmd>call vimspector#StepInto()<CR>")
+
+-- nnoremap("Db", "<Plug>VimspectorToggleBreakpoint")
+-- nnoremap("Dw", ":call vimspector#AddWatch()<CR>")
+-- nnoremap("De", ":call vimspector#Evaluate()<CR>")
+
+-- nnoremap("<leader>db", "<Cmd>lua require('plugins.vimspector').generate_debug_profile()<CR>")
+
+
+-- local exprnnoremap = Utils.exprnnoremap
+--
+-- dap
+nnoremap("Db", "lua require'dapui'.eval()<CR>")

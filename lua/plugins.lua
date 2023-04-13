@@ -10,8 +10,23 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone','https://github.com/wbthomason/packer.nvim', install_path})
 end
 
+-- Bootstrap vimspector
+local install_path = fn.stdpath('data')..'/site/pack/packer/opt'
+print(install_path)
+if fn.empty(fn.glob(install_path..'/vimspector')) > 0 then
+
+  fn.system({'wget', '-O', install_path..'/vimspector.tar', 'https://github.com/puremourning/vimspector/releases/download/4631574030/vimspector-macos-4631574030.tar.gz'})
+  fn.system({ 'tar', '-xf', install_path..'/vimspector.tar', '-C', install_path })
+  fn.system({'rm', install_path..'/vimspector'})
+
+
+end
 -- Load Packer
 cmd([[packadd packer.nvim]])
+cmd([[
+  packadd! vimspector
+  let g:vimspector_enable_mappings = 'HUMAN'
+]])
 
 -- Rerun PackerCompile everytime pluggins.lua is updated
 cmd([[
@@ -21,6 +36,13 @@ cmd([[
   augroup end
 ]])
 
+--cmd([[
+-- packadd vimspector
+-- let g:vimspector_sidebar_width = 85
+-- let g:vimspector_bottombar_height = 15
+-- let g:vimspector_terminal_maxwidth = 70
+--]])
+--vim.--  debuggers()
 -- Initialize pluggins
 return require('packer').startup(function(use)
   -- Let Packer manage itself
@@ -42,6 +64,17 @@ return require('packer').startup(function(use)
     'neovim/nvim-lspconfig',
     config = function() require('plugins.lspconfig') end
   })
+
+-- vimspector
+-- use {
+--  "puremourning/vimspector",
+--  opt = true,
+-- cmd = { "VimspectorInstall", "VimspectorUpdate" },
+--  fn = { "vimspector#Launch()", "vimspector#ToggleBreakpoint", "vimspector#Continue" },
+--  config = function()
+--    require("plugins.vimspector").setup()
+--  end,
+--}
 
   -- Use mason instead
     -- Autocomplete

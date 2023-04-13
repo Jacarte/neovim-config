@@ -5,9 +5,9 @@ require("mason-lspconfig").setup {
       "jsonls",
       -- "julials",
       "pyright",
-      "rust_analyzer",
+       "rust_analyzer",
       -- "sumneko_lua",
-      "texlab",
+       "texlab",
     },
     automatic_installation= true,
 }
