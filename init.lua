@@ -7,5 +7,5 @@ require('commands')
 require('plugins')
 require('themes')  -- Theme at the end, to prevent overwrite by other plugins
 
-let g:vimspector_enable_mappings = 'HUMAN'
-vim.cmd ([[autocmd BufEnter * silent! lcd %:p:h]])
+vim.cmd([[let g:vimspector_enable_mappings = 'HUMAN']])
+vim.cmd([[autocmd BufEnter * silent! lcd %:p:h]])
