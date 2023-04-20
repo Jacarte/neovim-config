@@ -10,17 +10,6 @@ if fn.empty(fn.glob(install_path)) > 0 then
   packer_bootstrap = fn.system({'git', 'clone','https://github.com/wbthomason/packer.nvim', install_path})
 end
 
--- Bootstrap vimspector
-local install_path = fn.stdpath('data')..'/site/pack/packer/opt'
-print(install_path)
-if fn.empty(fn.glob(install_path..'/vimspector')) > 0 then
-
-  fn.system({'wget', '-O', install_path..'/vimspector.tar', 'https://github.com/puremourning/vimspector/releases/download/4631574030/vimspector-macos-4631574030.tar.gz'})
-  fn.system({ 'tar', '-xf', install_path..'/vimspector.tar', '-C', install_path })
-  fn.system({'rm', install_path..'/vimspector'})
-
-
-end
 -- Load Packer
 cmd([[packadd packer.nvim]])
 cmd([[
@@ -54,9 +43,16 @@ return require('packer').startup(function(use)
   -- Rust tools
   use("simrat39/rust-tools.nvim")
   -- LSP server
-  use "williamboman/mason.nvim"
+  use {
+    "williamboman/mason.nvim",
+    run = ":MasonUpdate" -- :MasonUpdate updates registry contents
+  }
   use ({
     "williamboman/mason-lspconfig.nvim",
+    requires = {
+        "williamboman/mason.nvim"
+
+    },
     config = function() require('plugins.mason-lspconfig') end,
   })
 
