@@ -1,3 +1,4 @@
+require("mason").setup()
 require("mason-lspconfig").setup {
     ensure_installed = {
       "bashls",
@@ -8,6 +9,7 @@ require("mason-lspconfig").setup {
        "rust_analyzer",
       -- "sumneko_lua",
        "texlab",
+       "tsserver"
     },
     automatic_installation= true,
 }
