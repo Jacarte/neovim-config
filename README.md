@@ -10,7 +10,7 @@ This readme exist so I don't have to remember how to do all these things when se
 
 The first step is to install the correct version of Neovim. Most plugins require version 0.5 or above, but `treesitter` actually requires >= 0.5.1. to work. Version 0.6 has now been relased, which means the previous comment is deprecated. Versions can be installed using `snap`:
 
-**In case of server config, run `set -ga terminal-overrides ",xterm-256color:Tc,alacritty:RGB"` for correct colors**
+**In case of server config, set `export TERM=xterm-256color;export TERM=screen-256color-bce;alias tmux='tmux -2'` for correct colors**
 
 ```bash
 # For stable versions
