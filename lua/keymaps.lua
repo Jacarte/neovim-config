@@ -116,7 +116,7 @@ nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
 
 -- Lazygit on floatterm
 -- It needs lazygit, brew install jesseduffield/lazygit/lazygit
-nnoremap("GW", "<Cmd>FloatermNew --height=0.8 --width=0.7 lazygit<CR>")
+nnoremap("GW", "<Cmd>FloatermNew --height=0.8 --width=0.7 --name=GW lazygit<CR>")
 
 -- To fix neoterm
 --:tnoremap <Esc> <C-\><C-n>

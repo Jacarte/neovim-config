@@ -4,8 +4,10 @@ require("mason-lspconfig").setup {
       "bashls",
       "clangd",
       "jsonls",
+      -- Rust implemented is always better than node :|
+      "pylyzer",
       -- "julials",
-      "pyright",
+      -- "pyright",
        "rust_analyzer",
       -- "sumneko_lua",
        "texlab",
