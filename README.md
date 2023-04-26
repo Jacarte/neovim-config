@@ -43,6 +43,10 @@ brew reinstall neovim
 
 Additionally, you may need to configure the `Option` key to behave like `Alt`. In **iTerm2**, this can be done in `Preferences -> Profiles -> Keys`. Change the left option behaviour to `Esc+`. For **kitty**, you need to set `macos_option_as_alt left` (defualt is no) in the terminal's config file. Restarting the terminal (`Command + Q`, then restart) is required for this to take effect.
 
+## Git
+
+We laazygit for git integration. Make sure you have it installed.
+
 ## Installing the configuration
 
 Clone the repo into Neovim's installation folder (usually `/home/<usr>/.config/nvim`):
