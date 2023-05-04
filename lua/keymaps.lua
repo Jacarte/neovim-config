@@ -116,13 +116,16 @@ nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
 
 -- Lazygit on floatterm
 -- It needs lazygit, brew install jesseduffield/lazygit/lazygit
-nnoremap("GW", "<Cmd>FloatermNew --height=0.8 --width=0.7 --name=GW lazygit<CR>")
+nnoremap("GW", "<Cmd>lua _lazygit_toggle()<CR>")
 
 -- To fix neoterm
 --:tnoremap <Esc> <C-\><C-n>
 tnoremap("<Esc>", "<C-\\><C-n>")
-nnoremap("<leader>ft", ":FloatermNew --name=float --height=0.8 --width=0.7 --autoclose=2 zsh <CR>")
-nnoremap("t", ":FloatermToggle float <CR>")
+-- nnoremap("<leader>ft", ":FloatermNew --name=float --height=0.8 --width=0.7 --autoclose=2 zsh <CR>")
+-- We replace now by toggle term
+-- nnoremap("t", ":FloatermToggle float <CR>")
+nnoremap("t", '<Cmd>exe v:count1."ToggleTerm direction=horizontal"<CR>')
+
 -- nnoremap("<leader>e", "<Cmd>RnvimrToggle<CR>")
 
 -- EasyAlign
