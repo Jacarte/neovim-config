@@ -12,10 +12,6 @@ end
 
 -- Load Packer
 cmd([[packadd packer.nvim]])
-cmd([[
-  packadd! vimspector
-  let g:vimspector_enable_mappings = 'HUMAN'
-]])
 
 -- Rerun PackerCompile everytime pluggins.lua is updated
 cmd([[
