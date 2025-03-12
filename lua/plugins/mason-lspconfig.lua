@@ -11,7 +11,10 @@ require("mason-lspconfig").setup {
        "rust_analyzer",
       -- "sumneko_lua",
        "texlab",
-       "tsserver"
+       -- "tsserver"
+       "ts_ls",
+       -- go
+       "gopls"
     },
     automatic_installation= true,
 }
