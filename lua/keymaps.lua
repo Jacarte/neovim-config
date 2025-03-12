@@ -129,7 +129,9 @@ nnoremap("t", '<Cmd>lua _session_toggle()<CR>')
 -- nnoremap("n", '<Cmd>lua _session_toggle()<CR>')
 nnoremap("<Esc><Esc>", "<Cmd>lua _hide_all_terminals()<CR>")
 
-nnoremap("tc", '<Cmd>lua _session_colima_toggle()<CR>')
+-- nnoremap("tc", '<Cmd>lua _session_colima_toggle()<CR>')
+nnoremap("<leader>x", '<Cmd> lua _fork_terminal()<CR>')
+
 
 
 -- EasyAlign
