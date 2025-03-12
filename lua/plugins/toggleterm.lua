@@ -55,6 +55,25 @@ function _hide_all_terminals()
   end
 end
 
+function _fork_terminal()
+  -- Get the current file's working directory
+  local cwd = vim.fn.expand('%:p:h')
+
+  -- Prompt the user for a command
+  vim.ui.input({ prompt = "Enter command: ", default = "ls" }, function(command)
+    if command == nil or command == "" then
+      print("No command entered, aborting.")
+      return
+    end
+
+    -- Define the Kitty command
+    local terminal_cmd = string.format("kitty --working-directory='%s' bash -c '%s; exec bash'", cwd, command)
+
+    -- Execute the terminal command
+    vim.fn.jobstart(terminal_cmd, { detach = true })
+  end)
+end
+
 
 local sessionalTC = Terminal:new({cmd="colima ssh",  hidden = true, direction = "horizontal" })
 function _session_colima_toggle()
