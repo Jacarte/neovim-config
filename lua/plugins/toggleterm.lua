@@ -38,7 +38,7 @@ function _session_toggle()
 
   -- If a terminal for this count doesn't exist, create one
   if not terminals[count] then
-    terminals[count] = Terminal:new({ hidden = true, direction = "tab", on_open = function(term)
+    terminals[count] = Terminal:new({ hidden = true, direction = "float", on_open = function(term)
         term:send("echo 'Terminal #" .. count .. "'\n")
       end })
   end
@@ -46,6 +46,15 @@ function _session_toggle()
   -- Toggle the specific terminal instance
   terminals[count]:toggle()
 end
+
+function _hide_all_terminals()
+  for _, term in pairs(terminals) do
+      if term:is_open() then
+        term:toggle()
+      end
+  end
+end
+
 
 local sessionalTC = Terminal:new({cmd="colima ssh",  hidden = true, direction = "horizontal" })
 function _session_colima_toggle()
