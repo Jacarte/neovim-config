@@ -124,8 +124,8 @@ tnoremap("<Esc>", "<C-\\><C-n>")
 -- nnoremap("<leader>ft", ":FloatermNew --name=float --height=0.8 --width=0.7 --autoclose=2 zsh <CR>")
 -- We replace now by toggle term
 -- nnoremap("t", ":FloatermToggle float <CR>")
-nnoremap("t", '<Cmd>exe v:count1."ToggleTerm direction=float"<CR>')
--- nnoremap("t", '<Cmd>lua _session_toggle(v:count1)<CR>')
+-- nnoremap("t", '<Cmd>exe v:count1."ToggleTerm direction=float"<CR>')
+nnoremap("t", '<Cmd>lua _session_toggle()<CR>')
 nnoremap("tc", '<Cmd>lua _session_colima_toggle()<CR>')
 
 
