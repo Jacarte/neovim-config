@@ -67,7 +67,7 @@ function _fork_terminal()
     end
 
     -- Define the Kitty command
-    local terminal_cmd = string.format("kitty --working-directory='%s' bash -c '%s; exec bash'", cwd, command)
+    local terminal_cmd = string.format("kitty --working-directory='%s' $SHELL -c '%s; exec $SHELL'", cwd, command)
 
     -- Execute the terminal command
     vim.fn.jobstart(terminal_cmd, { detach = true })
