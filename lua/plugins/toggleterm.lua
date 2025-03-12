@@ -6,3 +6,15 @@ function _lazygit_toggle()
 end
 
 
+
+local sessionalT = Terminal:new({ hidden = true, direction = "float" })
+function _session_toggle()
+  sessionalT:toggle()
+end
+
+local sessionalTC = Terminal:new({cmd="colima ssh",  hidden = true, direction = "horizontal" })
+function _session_colima_toggle()
+  sessionalTC:toggle()
+end
+
+

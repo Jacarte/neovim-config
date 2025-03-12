@@ -180,7 +180,7 @@ return require('packer').startup(function(use)
   -- Rust LSP
   -- use 'neoclide/coc.nvim'
 
-    -- "neovim/nvim-lspconfig",
+  -- use "neovim/nvim-lspconfig"
 
   -- TOML Files
   use 'cespare/vim-toml'
@@ -224,10 +224,27 @@ return require('packer').startup(function(use)
     require('packer').sync()
   end
 
+
+  function sizer(term)
+    if term.direction == "horizontal" then
+      return 15
+    elseif term.direction == "vertical" then
+      return vim.o.colums * 0.4
+    end
+
+    return 20
+  end
+
   use {"akinsho/toggleterm.nvim", tag = '*', config = function()
     require("toggleterm").setup{
-      shade_filetypes = {}
+      shade_filetypes = {},
+      size = sizer
     }
     require("plugins.toggleterm")
   end}
+
+  -- dotenv
+  use { "ellisonleao/dotenv.nvim", config = function() require("plugins.dotenv") end
+
+}
 end)
