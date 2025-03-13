@@ -74,6 +74,32 @@ function _fork_terminal()
   end)
 end
 
+function _fork_in()
+-- Get the current file's working directory
+  local cwd = vim.fn.expand('%:p:h')
+
+  -- Get the default shell from the user's environment
+  local shell = vim.fn.getenv("SHELL") or "/bin/bash"
+
+  -- Prompt the user for a command
+  vim.ui.input({ prompt = "Enter command: ", default = "" }, function(command)
+    if command == nil then
+      print("Command input was canceled.")
+      return
+    end
+
+    -- If no command is given, open an interactive shell
+    if command == "" then
+      command = shell
+    end
+
+    -- Kitty command to open a new tab in the same session
+    local terminal_cmd = string.format("kitty @ launch --to unix:/tmp/kitten --type=tab --cwd '%s' %s -c '%s; exec %s'", cwd, shell, command, shell)
+
+    -- Execute the command
+    vim.fn.jobstart(terminal_cmd, { detach = true })
+  end)
+end
 
 local sessionalTC = Terminal:new({cmd="colima ssh",  hidden = true, direction = "horizontal" })
 function _session_colima_toggle()
