@@ -67,7 +67,7 @@ function _fork_terminal()
     end
 
     -- Define the Kitty command
-    local terminal_cmd = string.format("kitty --working-directory='%s' $SHELL -c '%s; exec $SHELL'", cwd, command)
+    local terminal_cmd = string.format("kitty --working-directory='%s' $SHELL -c -l -i '%s; exec $SHELL -l -i'", cwd, command)
 
     -- Execute the terminal command
     vim.fn.jobstart(terminal_cmd, { detach = true })
@@ -94,7 +94,7 @@ function _fork_in()
     end
 
     -- Kitty command to open a new tab in the same session
-    local terminal_cmd = string.format("kitty @ launch --to unix:/tmp/kitten --type=tab --cwd '%s' %s -c '%s; exec %s'", cwd, shell, command, shell)
+    local terminal_cmd = string.format("kitty @ launch --to unix:/tmp/kitten --type=tab --cwd '%s' $SHELL -c -l -i '%s; exec $SHELL -l -i'", cwd, command)
 
     -- Execute the command
     vim.fn.jobstart(terminal_cmd, { detach = true })
