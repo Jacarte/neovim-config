@@ -218,6 +218,10 @@ TL;DR for `MacOS`:
 2. If the glyphs aren't displayed by default, then they can be specified manually by following the instructions.
 3. Refresh the fonts cache.
 
+## Fix kitty
+
+We use kitty to launch tabs with custom command terminals. To enable it, create a file in your mac like this instructions https://sw.kovidgoyal.net/kitty/faq/#how-do-i-specify-command-line-options-for-kitty-on-macos with the content `kitty -o allow_remote_control=yes -o enabled_layouts=tall --listen-on unix:/tmp/kitten`, otherwise it wont work. Try it out by doing `<leader>t` in neovim.
+
 ## TODO:
 
 Improvements:

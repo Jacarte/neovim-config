@@ -131,6 +131,7 @@ nnoremap("<Esc><Esc>", "<Cmd>lua _hide_all_terminals()<CR>")
 
 -- nnoremap("tc", '<Cmd>lua _session_colima_toggle()<CR>')
 nnoremap("<leader>x", '<Cmd> lua _fork_terminal()<CR>')
+nnoremap("<leader>t", '<Cmd> lua _fork_in()<CR>')
 
 
 
