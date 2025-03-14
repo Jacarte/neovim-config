@@ -243,8 +243,14 @@ return require('packer').startup(function(use)
     require("plugins.toggleterm")
   end}
 
-  -- dotenv
-  use { "ellisonleao/dotenv.nvim", config = function() require("plugins.dotenv") end
 
-}
+  -- rooter
+  -- SO we do not change to opened file location for telescope
+  use {
+    "ahmedkhalf/project.nvim",
+    config = function() require("plugins.project_nvim") end
+  }
+
+  -- dotenv
+  use { "ellisonleao/dotenv.nvim", config = function() require("plugins.dotenv") end }
 end)
