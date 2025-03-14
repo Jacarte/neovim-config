@@ -59,6 +59,14 @@ vnoremap("<leader>s", ":s//g<Left><Left>")
 vnoremap("<leader><A-s>", ":%s//g<Left><Left>")
 vnoremap("<leader>S", ":%s//gc<Left><Left><Left>")
 
+-- Use regular Ctrl-C in visual mode to copy
+vnoremap("<C-x>", '"+d')
+vnoremap("<C-c>", '"+y')
+
+
+
+
+
 -- Delete buffer
 nnoremap("<A-w>", ":bd<CR>")
 
