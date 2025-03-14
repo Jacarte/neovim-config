@@ -251,6 +251,7 @@ return require('packer').startup(function(use)
     config = function() require("plugins.project_nvim") end
   }
 
+  use "elihunter173/dirbuf.nvim"
   -- dotenv
   use { "ellisonleao/dotenv.nvim", config = function() require("plugins.dotenv") end }
 end)
