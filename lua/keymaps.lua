@@ -167,3 +167,6 @@ nnoremap("<leader>t", '<Cmd> lua _fork_in()<CR>')
 --
 -- dap
 nnoremap("Db", "lua require'dapui'.eval()<CR>")
+
+-- Get all the keymaps
+nnoremap("<leader>km", ":Telescope keymaps<CR>")
