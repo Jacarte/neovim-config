@@ -248,7 +248,7 @@ return require('packer').startup(function(use)
   -- SO we do not change to opened file location for telescope
   use {
     "ahmedkhalf/project.nvim",
-    config = function() require("plugins.project_nvim") end
+     config = function() require("plugins.project_nvim") end
   }
 
   use "elihunter173/dirbuf.nvim"
