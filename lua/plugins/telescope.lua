@@ -1,6 +1,18 @@
 local actions = require('telescope.actions')
 -- local utils = require('telescope.utils')
 -- local trouble = require('telescope.providers.telescope')
+local transform_mod = require('telescope.actions.mt').transform_mod
+
+
+local mod = {}
+mod.open_in_nvim_tree = function(prompt_bufnr)
+    local cur_win = vim.api.nvim_get_current_win()
+    vim.cmd("NvimTreeFindFile")
+    vim.api.nvim_set_current_win(cur_win)
+end
+
+mod = transform_mod(mod)
+
 
 require('telescope').setup({
   defaults = {
@@ -10,9 +22,11 @@ require('telescope').setup({
         ['<C-j>'] = actions.move_selection_next,
         ['<C-k>'] = actions.move_selection_previous,
         ['<C-c>'] = actions.close,
+        ["<CR>"]  = actions.select_default + mod.open_in_nvim_tree,
       },
       n = {
         ['<C-c>'] = actions.close,
+        ["<CR>"]  = actions.select_default + mod.open_in_nvim_tree,
       },
     },
     layout_config = {

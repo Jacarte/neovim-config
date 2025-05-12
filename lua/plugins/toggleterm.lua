@@ -39,7 +39,7 @@ function _session_toggle()
   -- If a terminal for this count doesn't exist, create one
   if not terminals[count] then
     terminals[count] = Terminal:new({ hidden = true, direction = "float", on_open = function(term)
-        term:send("echo 'Terminal #" .. count .. "'\n")
+        term:send("\n")
       end })
   end
 

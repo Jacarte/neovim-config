@@ -18,5 +18,7 @@ vim.g.copilot_filetypes = {
     ["go"] = true,
     ["python"] = true,
     ["ts"] = true,
+    ["sh"] = true,
+    ["bash"] = true,
 
   }

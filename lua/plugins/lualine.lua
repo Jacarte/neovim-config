@@ -28,7 +28,7 @@ require('lualine').setup({
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff'},
+    lualine_b = {'branch', 'diff', 'lsp_status', 'selectioncount'},
     lualine_c = {
       'filetype',
       {
@@ -69,7 +69,7 @@ require('lualine').setup({
       },
       lsp,
     },
-    lualine_x = { nvimbattery, 'windows', 'tabs', 'encoding'},
+    lualine_x = { nvimbattery, 'windows', 'tabs', 'encoding', 'fileformat'},
     lualine_y = {'progress'},
     lualine_z = {
       {function () return '' end},
