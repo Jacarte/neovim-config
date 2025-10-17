@@ -30,23 +30,9 @@ nvim_lsp["pyright"].setup({
 require('lsp.rust')
 -- require('lsp.sumneko')
 
--- Go configuration
-nvim_lsp.gopls.setup({
-  capabilities = capabilities,
-  on_attach = common_on_attach,
-  cmd = { "gopls" },
-  filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_dir = { "go.work", "go.mod", ".git"  },
-  settings = {
-    gopls = {
-      completeUnimported = true,
-      usePlaceholders = true,
-      analyses = {
-        unusedparams = true
-      },
-    },
-  },
-})
+require('lsp.ts')
+
+require("lsp.golang")
 
 -- signature help hover
 require "lsp_signature".setup({ })
