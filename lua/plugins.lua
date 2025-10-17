@@ -52,6 +52,65 @@ return require('packer').startup(function(use)
     config = function() require('plugins.mason-lspconfig') end,
   })
 
+  use {
+    "nvim-neotest/neotest",
+    requires = {
+      "nvim-neotest/nvim-nio",
+      "nvim-lua/plenary.nvim",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      'nvim-neotest/neotest-go',
+    },
+    config = function()
+      require('neotest').setup({
+        adapters = {
+          require('neotest-go')({
+            args = { '-coverprofile=coverage.out' },
+            experimental = {
+              test_table = true
+            }
+          })
+        },
+      })
+    end,
+  }
+
+  use{
+	'andythigpen/nvim-coverage',
+    dependencies = {
+        'nvim-lua/plenary.nvim',
+    },
+    config = function()
+        require('coverage').setup({
+          auto_reload = true,
+          lang = {
+            go = {
+              -- We need this because we have hardcoded the cwd to be the project/repo root folder
+              -- to make telescope to work globally
+              coverage_file = function()
+                local f = vim.api.nvim_buf_get_name(0)
+                local dir = vim.fs.dirname(f)
+                local path = dir .. "/coverage.out"
+                vim.notify("nvim-coverage: using " .. path)
+                return path
+              end
+            }
+          }
+        })
+    end,
+  }
+
+  use{
+    'nvim-treesitter/nvim-treesitter', tag = 'v0.9.3',
+    config = function()
+      require('nvim-treesitter.configs').setup({
+        ensure_installed = { 'go', 'lua', 'typescript', 'javascript', 'json', 'yaml', 'html', 'css', 'bash', 'python', 'markdown', 'scala' },
+        highlight = {
+          enable = true,
+        },
+      })
+    end
+  }
   use({
     'neovim/nvim-lspconfig',
     config = function() require('plugins.lspconfig') end
@@ -86,11 +145,11 @@ return require('packer').startup(function(use)
   })
 
   -- Treesitter
-  use({
-    'nvim-treesitter/nvim-treesitter',
-    config = function() require('plugins.treesitter') end,
-    run = ':TSUpdate'
-  })
+  --use({
+  --  'nvim-treesitter/nvim-treesitter',
+  --  config = function() require('plugins.treesitter') end,
+  --  run = ':TSUpdate'
+  --})
 
   -- Snippets
   use {"L3MON4D3/LuaSnip", config = function() require('plugins.snippets') end}
@@ -99,14 +158,17 @@ return require('packer').startup(function(use)
   -- Signature help
   use "ray-x/lsp_signature.nvim"
 
+  use({'nvim-telescope/telescope-fzf-native.nvim', run ='make'})
   -- Telescope
   use({
     'nvim-telescope/telescope.nvim',
-    requires = {{'nvim-lua/plenary.nvim'}},
+    requires = {
+      {'nvim-lua/plenary.nvim'},
+      {'nvim-telescope/telescope-fzy-native.nvim'}
+    },
     config = function() require('plugins.telescope') end,
   })
 
-  use({'nvim-telescope/telescope-fzf-native.nvim', run ='make'})
 
   -- bufferline
   use({
@@ -202,19 +264,19 @@ return require('packer').startup(function(use)
   use 'folke/tokyonight.nvim'
   use 'marko-cerovac/material.nvim'
 
-  use({
-  "jackMort/ChatGPT.nvim",
-    config = function()
-      require("chatgpt").setup({
-        -- optional configuration
-      })
-    end,
-    requires = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim"
-    }
-})
+  --use({
+  --"jackMort/ChatGPT.nvim",
+  --  config = function()
+  --    require("chatgpt").setup({
+  --      -- optional configuration
+  --    })
+  --  end,
+  --  requires = {
+  --    "MunifTanjim/nui.nvim",
+  --    "nvim-lua/plenary.nvim",
+  --    "nvim-telescope/telescope.nvim"
+  --  }
+--})
 
   use { 'justinhj/battery.nvim', requires = {{'kyazdani42/nvim-web-devicons'}, {'nvim-lua/plenary.nvim'}},
     config = function() require('plugins.battery') end

@@ -11,7 +11,7 @@ cmd([[autocmd ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
 function M.common_on_attach(client, bufnr)
   -- Set omnifunc
   vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-
+  local ft = vim.bo[bufnr].filetype
 
   -- Helper function
   local opts = {noremap = true, silent = true}
@@ -48,12 +48,72 @@ function M.common_on_attach(client, bufnr)
 
   -- Show documentation
   bufnnoremap("<leader>h",  "<Cmd>lua vim.lsp.buf.hover()<CR>")
+
+  -- Tests
+
+  bufnnoremap('<Leader>tt', ':lua require("neotest").run.run()<CR>', { desc = 'Run test' })
   -- Markdown preview TODO: make this conditional, but I also don't use it all that much
   -- bufnnnoremap("<leader>P", "<Cmd>Glow<CR>")
 
-  if client.server_capabilities.document_formatting then
-    cmd("autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()")
+  if ft == "go" then
+    M.setup_reference_count_display(bufnr)
   end
+end
+
+function M.setup_reference_count_display(bufnr)
+  local namespace = vim.api.nvim_create_namespace('reference_count')
+
+  local function update_reference_counts()
+    vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
+
+    local params = {
+      textDocument = vim.lsp.util.make_text_document_params(bufnr)
+    }
+
+    vim.lsp.buf_request(bufnr, 'textDocument/documentSymbol', params, function(err, result, ctx, config)
+      if err or not result then return end
+
+      local function process_symbols(symbols)
+        for _, symbol in ipairs(symbols) do
+          if symbol.kind == 8 or symbol.kind == 6 or symbol.kind == 12 then
+            local range = symbol.range or symbol.location.range
+            local line = range.start.line
+
+            local ref_params = {
+              textDocument = vim.lsp.util.make_text_document_params(bufnr),
+              position = range.start,
+              context = { includeDeclaration = false }
+            }
+
+            vim.lsp.buf_request(bufnr, 'textDocument/references', ref_params, function(ref_err, references, ref_ctx, ref_config)
+              if ref_err then return end
+
+              local count = references and #references or 0
+              local hl_group = count == 0 and 'WarningMsg' or 'Comment'
+
+              vim.api.nvim_buf_set_extmark(bufnr, namespace, line, 0, {
+                virt_text = {{string.format(' [%d refs]', count), hl_group}},
+                virt_text_pos = 'eol',
+              })
+            end)
+          end
+
+          if symbol.children then
+            process_symbols(symbol.children)
+          end
+        end
+      end
+
+      process_symbols(result)
+    end)
+  end
+
+  vim.api.nvim_create_autocmd({'BufEnter', 'BufWritePost', 'TextChanged', 'InsertLeave'}, {
+    buffer = bufnr,
+    callback = update_reference_counts,
+  })
+
+  update_reference_counts()
 end
 
 return M
