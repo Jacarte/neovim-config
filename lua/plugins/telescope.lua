@@ -14,16 +14,17 @@ end
 mod.cwd_up = function(prompt_bufnr)
     local state = require('telescope.actions.state')
     local picker = state.get_current_picker(prompt_bufnr)
-    local cwd = picker.cwd or vim.fn.getcwd()
+    -- local cwd = picker.cwd or vim.fn.getcwd(-1, -1)
     local parent = vim.fn.fnamemodify(cwd, ':h')
     local nvim_root = vim.fn.getcwd(-1, -1)
-    
+
     if parent ~= cwd and #parent >= #nvim_root then
-        local opts = {
-            cwd = parent,
-        }
+        actions.close(prompt_bufnr)
         vim.notify("Telescope: " .. parent, vim.log.levels.INFO)
-        require('telescope.builtin').find_files(opts)
+        require('telescope.builtin').find_files({
+           -- cwd = parent,
+            prompt_title = parent
+        })
     else
         vim.notify("Already at nvim root", vim.log.levels.WARN)
     end
