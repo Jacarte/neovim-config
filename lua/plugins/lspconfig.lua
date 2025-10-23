@@ -1,4 +1,3 @@
-local nvim_lsp = require('lspconfig')
 local utils = require('lsp.utils')
 local common_on_attach = utils.common_on_attach
 
@@ -9,14 +8,20 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 -- Enable language servers with common settings
 local servers = {"bashls", "clangd", "pyright", "jsonls", "dockerls"}
 for _, lsp in ipairs(servers) do
-  nvim_lsp[lsp].setup({
+  vim.lsp.config[lsp] = {
+    cmd = vim.lsp.config[lsp].cmd,
+    filetypes = vim.lsp.config[lsp].filetypes,
+    root_markers = vim.lsp.config[lsp].root_markers,
     on_attach = common_on_attach,
     capabilities = capabilities,
-  })
+  }
 end
 
 
-nvim_lsp["pyright"].setup({
+vim.lsp.config["pyright"] = {
+  cmd = vim.lsp.config["pyright"].cmd,
+  filetypes = vim.lsp.config["pyright"].filetypes,
+  root_markers = vim.lsp.config["pyright"].root_markers,
   capabilities = capabilities,
   on_attach = common_on_attach,
   settings={
@@ -25,7 +30,7 @@ nvim_lsp["pyright"].setup({
       },
       pyright = {}
   }
-})
+}
 
 require('lsp.rust')
 -- require('lsp.sumneko')

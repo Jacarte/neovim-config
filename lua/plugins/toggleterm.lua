@@ -55,6 +55,11 @@ function _hide_all_terminals()
   end
 end
 
+function _for_voice()
+  local cwd = vim.fn.expand('%:p:h')
+
+end
+
 function _fork_terminal()
   -- Get the current file's working directory
   local cwd = vim.fn.expand('%:p:h')

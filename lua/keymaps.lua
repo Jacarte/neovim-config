@@ -114,10 +114,10 @@ nnoremap("<leader>D", "<Cmd>lua vim.diagnostic.setloclist()<CR>")
 nnoremap("<leader><A-d>", "<Cmd>lua vim.diagnostic.setqflist()<CR>")
 
 -- Telescope
-nnoremap("<leader>ff", "<Cmd>Telescope find_files<CR>")
-nnoremap("<leader>fhf","<Cmd>Telescope find_files hidden=true<CR>")
+nnoremap("<leader>ff", "<Cmd>lua require('telescope.builtin').find_files({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
+nnoremap("<leader>fhf","<Cmd>lua require('telescope.builtin').find_files({cwd = vim.fn.getcwd(-1, -1), hidden=true, prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
 nnoremap("<leader>fb", "<Cmd>Telescope buffers<CR>")
-nnoremap("<leader>fg", "<Cmd>Telescope live_grep<CR>")
+nnoremap("<leader>fg", "<Cmd>lua require('telescope.builtin').live_grep({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
 
 -- File explorer
 nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
