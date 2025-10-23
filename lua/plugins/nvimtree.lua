@@ -18,7 +18,18 @@ require('nvim-tree').setup({
     update_cwd = true,
   },
   view = {
-    -- adaptive_size = false,
+    float = {
+      enable = true,
+      quit_on_focus_loss = true,
+      open_win_config = {
+        relative = "editor",
+        border = "rounded",
+        width = 150,
+        height = 40,
+        row = 1,
+        col = 1,
+      },
+    },
     mappings = {
       list = {
         { key = "u", action= "dir_up" }
