@@ -170,3 +170,11 @@ nnoremap("Db", "lua require'dapui'.eval()<CR>")
 
 -- Get all the keymaps
 nnoremap("<leader>km", ":Telescope keymaps<CR>")
+
+-- Harpoon
+nnoremap("<leader>a", "<Cmd>lua require('harpoon'):list():add()<CR>")
+nnoremap("<C-e>", "<Cmd>lua require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())<CR>")
+nnoremap("<leader>1", "<Cmd>lua require('harpoon'):list():select(1)<CR>")
+nnoremap("<leader>2", "<Cmd>lua require('harpoon'):list():select(2)<CR>")
+nnoremap("<leader>3", "<Cmd>lua require('harpoon'):list():select(3)<CR>")
+nnoremap("<leader>4", "<Cmd>lua require('harpoon'):list():select(4)<CR>")

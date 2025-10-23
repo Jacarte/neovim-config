@@ -320,4 +320,11 @@ return require('packer').startup(function(use)
   use "elihunter173/dirbuf.nvim"
   -- dotenv
   use { "ellisonleao/dotenv.nvim", config = function() require("plugins.dotenv") end }
+  
+  -- harpoon
+  use {
+    "ThePrimeagen/harpoon",
+    branch = "harpoon2",
+    requires = { "nvim-lua/plenary.nvim" }
+  }
 end)
