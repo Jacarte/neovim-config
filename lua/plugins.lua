@@ -37,7 +37,11 @@ return require('packer').startup(function(use)
 
   use('nvim-lua/lsp-status.nvim')
   -- Rust tools
-  use("simrat39/rust-tools.nvim")
+  use({
+    'mrcjkb/rustaceanvim',
+    ft = { 'rust' },
+    tag = '5.15.1',
+  })
   -- LSP server
   use {
     "williamboman/mason.nvim",
@@ -158,7 +162,7 @@ return require('packer').startup(function(use)
   -- Signature help
   use "ray-x/lsp_signature.nvim"
 
-  use({'nvim-telescope/telescope-fzf-native.nvim', run ='make'})
+  use({'nvim-telescope/telescope-fzf-native.nvim', run ='cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'})
   -- Telescope
   use({
     'nvim-telescope/telescope.nvim',

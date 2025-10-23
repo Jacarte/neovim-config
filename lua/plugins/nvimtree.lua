@@ -13,10 +13,10 @@ require('nvim-tree').setup({
     enable = true,
     auto_open = true,
   },
-  --update_focused_file = {
-  --  update_cwd = true,
-  --  enable = true
-  --},
+  update_focused_file = {
+    enable = true,
+    update_cwd = true,
+  },
   view = {
     -- adaptive_size = false,
     mappings = {
