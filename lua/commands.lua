@@ -13,3 +13,9 @@ vim.cmd("command! HelpTags Telescope help_tags")
 
 -- Create ctags
 vim.cmd('command! MakeCTags !ctags -R --exclude=@.ctagsignore .')
+
+-- Debug neotest with current file
+vim.cmd('command! NeotestFile lua require("neotest").run.run(vim.fn.expand("%")); vim.defer_fn(function() require("neotest").summary.open() end, 500)')
+
+-- Debug neotest
+vim.cmd('command! NetotestDebug lua require("neotest")._debug()')

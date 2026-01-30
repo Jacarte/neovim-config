@@ -14,7 +14,7 @@ end
 mod.cwd_up = function(prompt_bufnr)
     local state = require('telescope.actions.state')
     local picker = state.get_current_picker(prompt_bufnr)
-    -- local cwd = picker.cwd or vim.fn.getcwd(-1, -1)
+    local cwd = picker.cwd or vim.fn.getcwd(-1, -1)
     local parent = vim.fn.fnamemodify(cwd, ':h')
     local nvim_root = vim.fn.getcwd(-1, -1)
 
@@ -22,7 +22,7 @@ mod.cwd_up = function(prompt_bufnr)
         actions.close(prompt_bufnr)
         vim.notify("Telescope: " .. parent, vim.log.levels.INFO)
         require('telescope.builtin').find_files({
-           -- cwd = parent,
+            cwd = parent,
             prompt_title = parent
         })
     else
@@ -45,7 +45,7 @@ require('telescope').setup({
         ['<C-k>'] = actions.move_selection_previous,
         ['<C-c>'] = actions.close,
         ['<C-u>'] = mod.cwd_up,
-        ["<CR>"]  = actions.select_default + mod.open_in_nvim_tree,
+        ["<CR>"]  = actions.select_default,
       },
       n = {
         ['<C-c>'] = actions.close,
@@ -62,6 +62,7 @@ require('telescope').setup({
     borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
     results_title = false
   },
+
   extensions ={
       fzf = {
         fuzzy = true,
