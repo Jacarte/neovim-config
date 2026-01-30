@@ -8,6 +8,7 @@ require('nvim-treesitter.configs').setup({
     "c",
     "cpp",
     "cuda",
+		"go",
 		"json",
     "julia",
 		"lua",

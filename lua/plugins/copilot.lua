@@ -20,5 +20,7 @@ vim.g.copilot_filetypes = {
     ["ts"] = true,
     ["sh"] = true,
     ["bash"] = true,
+    ["docker"] = true,
+    ["dockerfile"] = true,
 
   }

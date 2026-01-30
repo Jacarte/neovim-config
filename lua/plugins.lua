@@ -65,21 +65,65 @@ return require('packer').startup(function(use)
       "nvim-treesitter/nvim-treesitter",
       'nvim-neotest/neotest-go',
     },
-    config = function()
-      require('neotest').setup({
-        adapters = {
-          require('neotest-go')({
-            args = { '-coverprofile=coverage.out' },
-            experimental = {
-              test_table = true
-            }
-          })
-        },
-      })
-    end,
+     config = function()
+       -- get neotest namespace (api call creates or returns namespace)
+     local neotest_ns = vim.api.nvim_create_namespace("neotest")
+     vim.diagnostic.config({
+       virtual_text = {
+         format = function(diagnostic)
+           local message =
+             diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+           return message
+         end,
+       },
+     }, neotest_ns)
+        local neotest = require('neotest')
+        neotest.setup({
+          adapters = {
+            require('neotest-go')({
+              args = { '-coverprofile=coverage.out' },
+              experimental = {
+                test_table = true
+              },
+            })
+          },
+          icons = {
+            child_indent = "│",
+            child_prefix = "├",
+            collapsed = "─",
+            expanded = "╮",
+            failed = "✖",
+            final_child_indent = " ",
+            final_child_prefix = "└",
+            non_collapsible = "─",
+            passed = "✓",
+            running = "🏃",
+            running_animated = { "🏃", "🏃" },
+            skipped = "⊘",
+            unknown = "?"
+          },
+          diagnostic = {
+            enabled = true,
+          },
+          status = {
+            enabled = true,
+            signs = true,
+            virtual_text = true,
+          },
+        })
+
+        -- Log when tests are run
+        local original_run = neotest.run.run
+        neotest.run.run = function(...)
+          local file = vim.fn.expand("%:p")
+          local cwd = vim.fn.getcwd()
+          vim.notify("Neotest - File: " .. file .. " | CWD: " .. cwd, vim.log.levels.INFO)
+          return original_run(...)
+        end
+     end,
   }
 
-  use{
+   use{
 	'andythigpen/nvim-coverage',
     dependencies = {
         'nvim-lua/plenary.nvim',
@@ -196,6 +240,19 @@ return require('packer').startup(function(use)
     },
     config = function() require('plugins.nvimtree') end,  -- Must add this manually
   })
+  --
+
+  -- oil.nvim
+  --require("packer").startup(function()
+   -- use({
+   --   "stevearc/oil.nvim",
+   --   config = function()
+   --     require("oil").setup({
+   --       use_default_keymaps = true,
+   --     })
+   --   end,
+  --  })
+  --end)
 
   -- Startify
   use({
@@ -317,14 +374,24 @@ return require('packer').startup(function(use)
      config = function() require("plugins.project_nvim") end
   }
 
-  use "elihunter173/dirbuf.nvim"
   -- dotenv
   use { "ellisonleao/dotenv.nvim", config = function() require("plugins.dotenv") end }
-  
+
   -- harpoon
   use {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     requires = { "nvim-lua/plenary.nvim" }
+  }
+
+  -- sidekick for AI helper
+  use {
+    "folke/sidekick.nvim",
+    requires = {
+        "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      require("plugins.sidekick")
+    end
   }
 end)
