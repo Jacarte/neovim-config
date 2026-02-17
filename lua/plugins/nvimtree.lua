@@ -24,7 +24,7 @@ require('nvim-tree').setup({
       open_win_config = {
         relative = "editor",
         border = "rounded",
-        width = 150,
+        width = 100,
         height = 40,
         row = 1,
         col = 1,

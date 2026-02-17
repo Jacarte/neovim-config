@@ -273,11 +273,23 @@ return require('packer').startup(function(use)
     config = function() require('plugins.gitsigns') end
   })
 
-  -- copilot
-  use({'github/copilot.vim',
+  -- copilot (LSP-based for Sidekick integration)
+  use({
+    'zbirenbaum/copilot.lua',
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require('copilot').setup({
+        suggestion = { enabled = false },  -- Sidekick handles this via NES
+        panel = { enabled = true },
+        copilot_node_command = 'node',
+      })
+    end
+  })
+
+    use({'github/copilot.vim',
       config = function() require('plugins.copilot') end
     })
-
   -- Formatting
   use 'tpope/vim-commentary'
   use 'tpope/vim-unimpaired'

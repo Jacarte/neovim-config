@@ -7,7 +7,7 @@ require('sidekick').setup({
     },
     tools = {
       claude = { cmd = { "claude" } },
-      copilot = { cmd = { "copilot", "--banner" } },
+      -- copilot = { cmd = { "copilot", "--banner" } },
       cursor = { cmd = { "cursor-agent" } },
       opencode = {
         cmd = { "opencode" },
@@ -89,6 +89,12 @@ local keymaps = {
     lhs = "<leader>ac",
     rhs = function() sidekick_cli.toggle({ name = "opencode", focus = true }) end,
     opts = { noremap = true, desc = "Sidekick Toggle OpenCode" },
+  },
+  {
+    mode = "n",
+    lhs = "<leader>ao",
+    rhs = function() sidekick_cli.toggle({ name = "copilot", focus = true }) end,
+    opts = { noremap = true, desc = "Sidekick Toggle Copilot" },
   },
 }
 
