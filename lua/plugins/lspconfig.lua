@@ -37,4 +37,4 @@ require("lsp.golang")
 -- signature help hover
 require "lsp_signature".setup({ })
 
-
+vim.lsp.enable("copilot")

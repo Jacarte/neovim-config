@@ -1,4 +1,5 @@
 local nvim_lsp = require('lspconfig')
+local lsputil = require("lspconfig.util")
 local utils = require('lsp.utils')
 local common_on_attach = utils.common_on_attach
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -30,7 +31,7 @@ nvim_lsp.gopls.setup({
   on_attach = common_on_attach,
   cmd = { "gopls" },
   filetypes = { "go", "gomod", "gowork", "gotmpl" },
-  root_dir = { "go.work", "go.mod", ".git" },
+  root_dir = lsputil.root_pattern("go.work", "go.mod", ".git"),
   settings = {
     gopls = {
       completeUnimported = true,
