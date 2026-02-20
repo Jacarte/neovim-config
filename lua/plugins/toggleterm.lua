@@ -4,54 +4,63 @@ function _lazygit_toggle()
 end
 
 local terminals = {}
-local current_index = 1 -- Keeps track of the current terminal when iterating
+local current_index = 1
 
 function _session_toggle()
   local count = vim.v.count
 
   if count == 0 then
-    -- If no count is provided, iterate over terminals
     if #vim.tbl_keys(terminals) == 0 then
-      count = 1 -- Start from 1 if no terminal exists
+      count = 1
     else
-      -- Get the list of terminal indices and sort them
       local keys = vim.tbl_keys(terminals)
       table.sort(keys)
 
-      -- Find the next terminal index
       local next_index = nil
-      for i, key in ipairs(keys) do
+      for _, key in ipairs(keys) do
         if key > current_index then
           next_index = key
           break
         end
       end
 
-      -- If no next index, wrap around to the first one
       current_index = next_index or keys[1]
       count = current_index
     end
   else
-    -- If count is provided, use it directly
     current_index = count
   end
 
-  -- If a terminal for this count doesn't exist, create one
-  if not terminals[count] then
-    terminals[count] = Terminal:new({ hidden = true, direction = "float", on_open = function(term)
-        term:send("\n")
-      end })
+  local term = terminals[count]
+
+  if term and term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_buf(win) == term.bufnr then
+        vim.api.nvim_win_close(win, true)
+        return
+      end
+    end
+    vim.cmd("vsplit")
+    vim.api.nvim_win_set_buf(0, term.bufnr)
+    vim.cmd("startinsert")
+    return
   end
 
-  -- Toggle the specific terminal instance
-  terminals[count]:toggle()
+  vim.cmd("vsplit | terminal")
+  local bufnr = vim.api.nvim_get_current_buf()
+  terminals[count] = { bufnr = bufnr }
+  vim.cmd("startinsert")
 end
 
 function _hide_all_terminals()
   for _, term in pairs(terminals) do
-      if term:is_open() then
-        term:toggle()
+    if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == term.bufnr then
+          vim.api.nvim_win_close(win, true)
+        end
       end
+    end
   end
 end
 
