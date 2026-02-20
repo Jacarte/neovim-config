@@ -26,6 +26,12 @@ We also need to install the node package manager `npm` since most language serve
 sudo apt install npm
 ```
 
+We also need `opencode` for the AI-powered config Q&A feature. Install it via:
+
+```bash
+npm install -g @opencode-ai/cli
+```
+
 ### MacOS
 
 Assume `brew` is installed, then installing Neovim is straighforward:
@@ -42,6 +48,12 @@ brew reinstall neovim
 ```
 
 Additionally, you may need to configure the `Option` key to behave like `Alt`. In **iTerm2**, this can be done in `Preferences -> Profiles -> Keys`. Change the left option behaviour to `Esc+`. For **kitty**, you need to set `macos_option_as_alt left` (defualt is no) in the terminal's config file. Restarting the terminal (`Command + Q`, then restart) is required for this to take effect.
+
+Install `opencode` for the AI-powered config Q&A feature:
+
+```bash
+npm install -g @opencode-ai/cli
+```
 
 ## Git
 
@@ -199,6 +211,16 @@ Make sure to use the `-g` on all `npm` installs, otherwise the server won't be f
 ### Some further notes
 
 Inline error messages are disabled in the current configuration. They create a lot of clutter. To enable them back, comment the code on line 34 of `lua/options.lua`. This is a `nvim` option related to it's `lsp` interface, not something provided by the servers themselves.
+
+## AI-Powered Config Q&A (opencode_ask)
+
+Press `<leader>oc` to open an interactive Q&A interface. Ask questions about your Neovim config (keybindings, features, settings) and get instant answers powered by AI. The system:
+
+- Searches your `keymaps.lua`, `plugins.lua`, `options.lua`, and other config files
+- Caches answers locally for fast re-queries
+- Uses the `opencode` CLI with the `nvim-explorer` agent
+
+**Note**: Requires `opencode` CLI installed globally (`npm install -g @opencode-ai/cli`).
 
 ## Web-dev Icons
 

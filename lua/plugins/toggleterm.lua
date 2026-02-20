@@ -52,6 +52,45 @@ function _session_toggle()
   vim.cmd("startinsert")
 end
 
+local function get_active_term_chan()
+  for _, term in pairs(terminals) do
+    if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        if vim.api.nvim_win_get_buf(win) == term.bufnr then
+          local chan = vim.bo[term.bufnr].channel
+          if chan and chan > 0 then
+            return chan
+          end
+        end
+      end
+    end
+  end
+  return nil
+end
+
+function _send_selection_to_term()
+  local chan = get_active_term_chan()
+  if not chan then
+    vim.notify("No visible terminal", vim.log.levels.WARN)
+    return
+  end
+  local start_pos = vim.fn.getpos("'<")
+  local end_pos = vim.fn.getpos("'>")
+  local lines = vim.fn.getline(start_pos[2], end_pos[2])
+  for _, line in ipairs(lines) do
+    vim.fn.chansend(chan, line .. "\n")
+  end
+end
+
+function _send_filepath_to_term()
+  local chan = get_active_term_chan()
+  if not chan then
+    vim.notify("No visible terminal", vim.log.levels.WARN)
+    return
+  end
+  vim.fn.chansend(chan, vim.fn.expand("%:p") .. "\n")
+end
+
 function _hide_all_terminals()
   for _, term in pairs(terminals) do
     if term.bufnr and vim.api.nvim_buf_is_valid(term.bufnr) then
