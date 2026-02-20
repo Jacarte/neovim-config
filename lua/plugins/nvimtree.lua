@@ -1,7 +1,8 @@
 -- NVIM tree
 
+local api = require('nvim-tree.api')
+
 require('nvim-tree').setup({
-  -- Allow using gx
   disable_netrw = false,
   hijack_netrw = false,
   update_cwd = false,
@@ -17,23 +18,19 @@ require('nvim-tree').setup({
     enable = true,
     update_cwd = true,
   },
-  view = {
-    float = {
-      enable = true,
-      quit_on_focus_loss = true,
-      open_win_config = {
-        relative = "editor",
-        border = "rounded",
-        width = 100,
-        height = 40,
-        row = 1,
-        col = 1,
-      },
+  actions = {
+    open_file = {
+      quit_on_open = true,
     },
-    mappings = {
-      list = {
-        { key = "u", action= "dir_up" }
-      }
-    }
-  }
+  },
+  view = {
+    side = "right",
+    width = 40,
+  },
+  on_attach = function(bufnr)
+    api.config.mappings.default_on_attach(bufnr)
+    vim.keymap.set('n', 'u', api.tree.change_root_to_parent, { buffer = bufnr })
+    vim.keymap.set('n', 'L', api.tree.expand_all, { buffer = bufnr })
+    vim.keymap.set('n', 'E', '<CMD>NvimTreeToggle<CR>', { buffer = bufnr })
+  end,
 })

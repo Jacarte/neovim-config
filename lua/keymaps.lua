@@ -42,7 +42,7 @@ nnoremap("<C-l>", "<C-w>l")
 
 -- Switch buffers (needs nvim-bufferline)
 nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
-map("n", "E", "<CMD>NvimTreeFocus<CR>")
+map("n", "E", "<CMD>NvimTreeToggle<CR>")
 -- Commented out, Shift Tab to focus the file explorer
 nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
 
