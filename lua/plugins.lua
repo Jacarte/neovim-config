@@ -406,4 +406,10 @@ return require('packer').startup(function(use)
       require("plugins.sidekick")
     end
   }
+
+  -- trouble
+  use {
+    "folke/trouble.nvim"
+  }
+
 end)
