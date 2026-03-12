@@ -19,3 +19,7 @@ vim.cmd('command! NeotestFile lua require("neotest").run.run(vim.fn.expand("%"))
 
 -- Debug neotest
 vim.cmd('command! NetotestDebug lua require("neotest")._debug()')
+
+vim.cmd('command! ChangedFiles lua require("changed_files").open_picker()')
+vim.cmd('command! ChangedFileNext lua require("changed_files").next_file()')
+vim.cmd('command! ChangedFilePrev lua require("changed_files").prev_file()')

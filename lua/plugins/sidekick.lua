@@ -1,6 +1,34 @@
 require('sidekick').setup({
   -- add any options here
   cli = {
+    win = {
+      keys = {
+        esc = {
+          "<Esc>",
+          function(terminal)
+            terminal:send("\27")
+          end,
+          mode = "t",
+          desc = "Send Escape to CLI",
+        },
+        shift_enter = {
+          "<S-CR>",
+          function(terminal)
+            terminal:send("\n")
+          end,
+          mode = "t",
+          desc = "Insert newline in CLI",
+        },
+        shift_enter_alt = {
+          "<S-Enter>",
+          function(terminal)
+            terminal:send("\n")
+          end,
+          mode = "t",
+          desc = "Insert newline in CLI",
+        },
+      },
+    },
     mux = {
       backend = "tmux",
       enabled = true,
