@@ -74,6 +74,15 @@ require('lualine').setup({
     lualine_z = {
       {function () return '' end},
       {'location'},
+      {
+        function()
+          local ok, opencode = pcall(require, "opencode")
+          if ok and opencode and opencode.statusline then
+            return opencode.statusline()
+          end
+          return ""
+        end,
+      },
     }
   },
 })

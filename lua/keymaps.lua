@@ -18,6 +18,15 @@ local inoremap = Utils.inoremap
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
 
+local function toggle_nvim_tree_keep_focus()
+  local current_win = vim.api.nvim_get_current_win()
+  vim.cmd('NvimTreeToggle')
+
+  if vim.api.nvim_win_is_valid(current_win) then
+    vim.api.nvim_set_current_win(current_win)
+  end
+end
+
 -- quick edit
 nnoremap("<C-z>", ":undo ")
 
@@ -42,7 +51,7 @@ nnoremap("<C-l>", "<C-w>l")
 
 -- Switch buffers (needs nvim-bufferline)
 nnoremap("<TAB>", ":BufferLineCycleNext<CR>")
-map("n", "E", "<CMD>NvimTreeToggle<CR>")
+vim.keymap.set('n', 'E', toggle_nvim_tree_keep_focus, { silent = true })
 -- Commented out, Shift Tab to focus the file explorer
 nnoremap("<S-TAB>", ":BufferLineCyclePrev<CR>")
 
@@ -119,11 +128,14 @@ nnoremap("<leader>fhf","<Cmd>lua require('telescope.builtin').find_files({cwd = 
 nnoremap("<leader>fb", "<Cmd>Telescope buffers<CR>")
 nnoremap("<leader>fg", "<Cmd>lua require('telescope.builtin').live_grep({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
 nnoremap("<leader>fd", "<Cmd>ChangedFiles<CR>")
+nnoremap("<leader>fB", "<Cmd>ChangedFilesAgainstBranch<CR>")
+nnoremap("<leader>fM", "<Cmd>ChangedFilesAgainstBranchSelect<CR>")
+nnoremap("<leader>fR", "<Cmd>ChangedFilesResetCompareBase<CR>")
 nnoremap("<leader>fn", "<Cmd>ChangedFileNext<CR>")
 nnoremap("<leader>fp", "<Cmd>ChangedFilePrev<CR>")
 
 -- File explorer
-nnoremap("<leader>e", "<Cmd>NvimTreeToggle<CR>")  -- NvimTree
+vim.keymap.set('n', '<leader>e', toggle_nvim_tree_keep_focus, { silent = true })
 
 -- Lazygit on floatterm
 -- It needs lazygit, brew install jesseduffield/lazygit/lazygit

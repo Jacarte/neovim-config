@@ -21,5 +21,8 @@ vim.cmd('command! NeotestFile lua require("neotest").run.run(vim.fn.expand("%"))
 vim.cmd('command! NetotestDebug lua require("neotest")._debug()')
 
 vim.cmd('command! ChangedFiles lua require("changed_files").open_picker()')
+vim.cmd('command! -bang ChangedFilesAgainstBranch lua require("changed_files").open_picker_against_branch(<bang>0 == 1)')
+vim.cmd('command! ChangedFilesAgainstBranchSelect lua require("changed_files").open_picker_against_branch(true)')
+vim.cmd('command! ChangedFilesResetCompareBase lua require("changed_files").clear_compare_base()')
 vim.cmd('command! ChangedFileNext lua require("changed_files").next_file()')
 vim.cmd('command! ChangedFilePrev lua require("changed_files").prev_file()')

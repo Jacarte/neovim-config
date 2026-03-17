@@ -13,11 +13,17 @@ require('bufferline').setup({
     show_buffer_close_icons = false,
     show_close_icon = false,
     separator_style = 'slant',
+    custom_filter = function(bufnr)
+      local ft = vim.bo[bufnr].filetype
+      local bt = vim.bo[bufnr].buftype
+      return ft ~= 'NvimTree' and bt ~= 'terminal'
+    end,
     -- Don't show bufferline over vertical, unmodifiable buffers
     offsets = {{
         filetype = 'NvimTree',
         text = 'File Explorer',
-        highlight = 'Directory'
+        highlight = 'Directory',
+        separator = true,
     }},
   },
   -- Don't use italic on current buffer
