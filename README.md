@@ -222,6 +222,36 @@ Press `<leader>oc` to open an interactive Q&A interface. Ask questions about you
 
 **Note**: Requires `opencode` CLI installed globally (`npm install -g @opencode-ai/cli`).
 
+## OpenCode plugin patch (required)
+
+This config applies a local patch to `opencode.nvim` on install/update. The patch lives in `lua/plugins/opencode_patch.lua` and is applied in two places:
+
+- `lua/plugins.lua` (plugin `run` hook)
+- `lua/plugins/opencode.lua` (runtime safety re-apply)
+
+### Why this patch is needed
+
+The upstream terminal behavior can break this workflow in a few edge cases:
+
+1. Closing/hiding the OpenCode terminal when it is the only window can leave the tab/window in a bad state.
+2. Interrupt shortcuts are too limited for fast interactive sessions.
+
+This patch adds:
+
+- safer window handling (`hide_or_replace_window`) so closing/hiding does not leave an unusable layout,
+- extra interrupt keymaps (`<C-Esc>` and `<C-[>`) in addition to the default interrupt key,
+- a safer close path when the OpenCode terminal is the last window.
+
+### Re-apply manually (if needed)
+
+If `opencode.nvim` is reinstalled or updated and behavior regresses:
+
+```vim
+:lua require("plugins.opencode_patch").apply()
+```
+
+Then restart Neovim.
+
 ## Web-dev Icons
 
 To visualize fancy icons and separators, a patched font must be installed. [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) has many already patched and offers instructions on how to create new ones (I don't recommend). To install a patched font follow these instructions:
