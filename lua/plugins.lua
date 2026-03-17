@@ -397,14 +397,47 @@ return require('packer').startup(function(use)
   }
 
   -- sidekick for AI helper
+  --use {
+  -- "folke/sidekick.nvim",
+  --  requires = {
+  --      "nvim-lua/plenary.nvim",
+  -- },
+  --  config = function()
+  --    require("plugins.sidekick")
+  --  end
+  -- }
+
   use {
-    "folke/sidekick.nvim",
+    "nickjvandyke/opencode.nvim",
+    version = "*", -- Latest stable release
+    run = function(plugin)
+      require("plugins.opencode_patch").apply(plugin.install_path)
+    end,
     requires = {
-        "nvim-lua/plenary.nvim",
+      {
+        -- `snacks.nvim` integration is recommended, but optional
+        ---@module "snacks" <- Loads `snacks.nvim` types for configuration intellisense
+        "folke/snacks.nvim",
+        config = function()
+          require("snacks").setup({
+            input = { enabled = true }, -- Enhances `ask()`
+            picker = { -- Enhances `select()`
+              actions = {
+                opencode_send = function(...) return require("opencode").snacks_picker_send(...) end,
+              },
+              win = {
+                input = {
+                  keys = {
+                    ["<a-a>"] = { "opencode_send", mode = { "n", "i" } },
+                  },
+                },
+              },
+            },
+          })
+        end,
+      },
     },
-    config = function()
-      require("plugins.sidekick")
-    end
+    config = function() require("plugins.opencode") end,
   }
 
   -- trouble

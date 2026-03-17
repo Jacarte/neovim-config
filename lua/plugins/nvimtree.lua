@@ -18,6 +18,10 @@ require('nvim-tree').setup({
     enable = true,
     update_cwd = false,
   },
+  filters = {
+    enable = true,
+    custom = { "^\\.git$" },
+  },
   live_filter = {
     always_show_folders = false,
   },
