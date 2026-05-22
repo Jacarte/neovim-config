@@ -1,99 +1,112 @@
 # Neovim configuration with Lua
 
-A [Neovim](https://github.com/neovim/neovim) configuration using Lua, with the minimal number of pluggins I need for programming. Different language servers available through the LSP protocol provide code completion and analysis.
+A [Neovim](https://github.com/neovim/neovim) configuration using Lua, with the minimal number of plugins I need for programming. Different language servers available through the LSP protocol provide code completion and analysis.
 
-This readme exist so I don't have to remember how to do all these things when setting up a new machine.
+This readme exists so I don't have to remember how to do all these things when setting up a new machine.
+
+## Requirements
+
+- Neovim **≥ 0.11** (uses `vim.lsp.config` / `vim.lsp.enable` native LSP API)
+- `npm` / `node` — most language servers install via npm
+- `opencode` — for the AI-powered config Q&A feature
 
 ## Setting up
 
 ### Linux
 
-The first step is to install the correct version of Neovim. Most plugins require version 0.5 or above, but `treesitter` actually requires >= 0.5.1. to work. Version 0.6 has now been relased, which means the previous comment is deprecated. Versions can be installed using `snap`:
-
-**In case of server config, set `export TERM=xterm-256color;export TERM=screen-256color-bce;alias tmux='tmux -2'` for correct colors**
-
 ```bash
-# For stable versions
+# Stable
 sudo snap install --beta nvim --classic
 
-# For nightly versions
+# Nightly
 sudo snap install --edge nvim --classic
 ```
 
-We also need to install the node package manager `npm` since most language servers are installed that way.
+**Server color fix:** `export TERM=xterm-256color; export TERM=screen-256color-bce; alias tmux='tmux -2'`
 
+Install npm:
 ```bash
 sudo apt install npm
 ```
 
-We also need `opencode` for the AI-powered config Q&A feature. Install it via:
-
+Install opencode:
 ```bash
 npm install -g @opencode-ai/cli
 ```
 
 ### MacOS
 
-Assume `brew` is installed, then installing Neovim is straighforward:
-
 ```bash
-# For stable version
+# Stable
 brew install neovim
 
-# for nightly version
+# Nightly
 brew install --HEAD neovim
 
-# To update
+# Update
 brew reinstall neovim
 ```
 
-Additionally, you may need to configure the `Option` key to behave like `Alt`. In **iTerm2**, this can be done in `Preferences -> Profiles -> Keys`. Change the left option behaviour to `Esc+`. For **kitty**, you need to set `macos_option_as_alt left` (defualt is no) in the terminal's config file. Restarting the terminal (`Command + Q`, then restart) is required for this to take effect.
+**iTerm2**: `Preferences → Profiles → Keys` → set Left Option to `Esc+`.  
+**kitty**: set `macos_option_as_alt left` in kitty config, then restart (`Command + Q`).
 
-Install `opencode` for the AI-powered config Q&A feature:
-
+Install opencode:
 ```bash
 npm install -g @opencode-ai/cli
 ```
 
 ## Git
 
-We laazygit for git integration. Make sure you have it installed.
+We use [lazygit](https://github.com/jesseduffield/lazygit) for git integration. Make sure you have it installed.
 
 ## Installing the configuration
 
-Clone the repo into Neovim's installation folder (usually `/home/<usr>/.config/nvim`):
 ```bash
 git clone https://github.com/Jacarte/neovim-config.git ~/.config/nvim
 cd ~/.config/nvim
 ```
 
-This will create a folder with the configuration with the following structure is as follows:
+The folder structure:
+
 ```
 |- lua
 |  |- lsp/
 |  |- plugins/
+|  |- changed_files.lua
+|  |- commands.lua
 |  |- keymaps.lua
+|  |- opencode_ask.lua
 |  |- options.lua
 |  |- plugins.lua
-|  |- theme.lua
+|  |- telescope_resume.lua
+|  |- themes.lua
 |  \- utils.lua
 |- plugin/
 \- init.lua
 ```
 
-This structure is important since Lua will not load files that are not located inside `lua`. The file `init.lua` loads all the modules located inside this folder to set the configuration. Most of the names are self explanatory. The most important file here is `plugins.lua`, which is the module that loads the relevant plugins. Some of the most important plugins are:
+The file `init.lua` loads all modules. `plugins.lua` declares all plugins via [packer](https://github.com/wbthomason/packer.nvim). Files under `lua/plugins/` contain per-plugin configuration. Files under `lua/lsp/` configure individual language servers.
 
-1. [**`packer`**](https://github.com/wbthomason/packer.nvim): Manage the plugins.
-2. [**`lspconfig`**](https://github.com/neovim/nvim-lspconfig): provides a client for the different language servers using the Language Server Protocol (LSP).
-3. [**`cmp`**](https://github.com/hrsh7th/nvim-cmp): Auto-complete functionality. Recommended by the core Neovim team.
-4. [**`treesitter`**](https://github.com/nvim-treesitter/nvim-treesitter): Syntax highlighting and other functionality.
-5. [**`NvimTree`**](https://github.com/kyazdani42/nvim-tree.lua): File explorer written in Lua.
-6. [**`fugitive`**](https://github.com/tpope/vim-fugitive): The best plugin for git.
-7. [**`gitsigns`**](https://github.com/lewis6991/gitsigns.nvim): Git gutter highlighting and hunk management in buffer.
-8. [**`telescope`**](https://github.com/nvim-telescope/telescope.nvim): Fuzzy finder.
-9. [**`lualine`**](https://github.com/nvim-lualine/lualine.nvim): A status line written in Lua which is similar to `vim-airline`.
+### Key plugins
 
-There are some more packages that are dependencies of the ones mentioned above, and some for formatting and theming as well. Adding new plugins is simple using the `use` function:
+| Plugin | Purpose |
+|--------|---------|
+| [packer](https://github.com/wbthomason/packer.nvim) | Plugin manager |
+| [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server definitions (used with `vim.lsp.config` native API) |
+| [mason](https://github.com/williamboman/mason.nvim) + [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim) | Install and manage LSP server binaries |
+| [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | Auto-complete |
+| [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
+| [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) | File explorer |
+| [telescope](https://github.com/nvim-telescope/telescope.nvim) | Fuzzy finder (`<leader>ff` / `<leader>fg`) |
+| [harpoon](https://github.com/ThePrimeagen/harpoon) | File bookmarks with exact line+column position |
+| [fugitive](https://github.com/tpope/vim-fugitive) | Git integration |
+| [gitsigns](https://github.com/lewis6991/gitsigns.nvim) | Git gutter and hunk management |
+| [lualine](https://github.com/nvim-lualine/lualine.nvim) | Status line |
+| [copilot](https://github.com/zbirenbaum/copilot.lua) | GitHub Copilot |
+| [toggleterm](https://github.com/akinsho/toggleterm.nvim) | Terminal management |
+| [snacks.nvim](https://github.com/folke/snacks.nvim) | UI utilities |
+
+Adding a new plugin with standard config:
 
 ```lua
 use({
@@ -102,149 +115,97 @@ use({
 })
 ```
 
-This will load a plugin with it's standard configuration. For more complex configurations, we create the relevant file in `lua/plugins` (eg. `lua/plugins/foo.lua`) and load it using the require function along with any other option we wish to pass on to the `use` function:
+For complex config, create `lua/plugins/foo.lua` and load it:
 
 ```lua
 use({
   '<author>/<plugin-repo>',
-  config = function() require('plugin/<plugin-name>') end,
-  -- Optionally require other plugins.
+  config = function() require('plugins/foo') end,
   requires = '<author>/<required-plugin-repo>'
-  -- Other functionality
 })
 ```
 
-Notice that the file type is omitted from this call.
+## LSP setup
 
-## Auto-completion
+Language servers are configured using Neovim's native LSP API (≥ 0.11). nvim-lspconfig provides server definitions; servers are activated with `vim.lsp.config` + `vim.lsp.enable`.
 
-The auto-complete functionality is achieved by using `nvim-cmp` to attach the relevant language servers to the buffers containing code. Most servers only require that the on attach function is specified so that different motions are available. Currently, the common function to attach a server to a buffer is located in `lua/lsp/utils.lua` . It will enable common key mappings for all language servers to display code completion.
+Server binaries are installed via **mason** (`:Mason` to open the UI). The `lua/plugins/mason-lspconfig.lua` file lists servers to auto-install.
 
-The second part is installing the language servers themselves (described below) and enabling them. `:LspInstall` can be used if [`nvim-lsp-installer`](https://github.com/williamboman/nvim-lsp-installer/) is found. Others may require manual installation. There is an extra step which involves installing the binaries for these servers, which we describe below.
+Per-language configuration lives in `lua/lsp/`:
 
-### Installing the language servers
+| File | Servers |
+|------|---------|
+| `lua/plugins/lspconfig.lua` | bashls, clangd, pyright, jsonls, dockerls |
+| `lua/lsp/ts.lua` | ts_ls (TypeScript/JS), eslint |
+| `lua/lsp/golang.lua` | gopls |
+| `lua/lsp/rust.lua` | rustaceanvim |
 
-Binaries for each language servers must be installed from their relevant repo. Most servers are installed using `npm install`, but others like `clangd` and `sumneko` for Lua require more involved procedures. Here is a list of servers and installation methods. These should work both on `bash` and `zsh`.
+The common `on_attach` function (key mappings, diagnostics) lives in `lua/lsp/utils.lua`.
 
-- **Bash**: bashls
+### Installing language server binaries
 
-  ```bash
-  npm i -g bash-language-server
-  ```
+Most servers install automatically via mason. For manual reference:
 
-- **C/C++**: clangd
-  May have to try several versions, but 13 is the latest one. I am using 12 and 9 or 8 should be available.
+- **Bash** (`bashls`): `npm i -g bash-language-server`
+- **C/C++** (`clangd`): `sudo apt-get install clangd-13` (Linux) or via XCode (macOS)
+- **Docker** (`dockerls`): `npm i -g dockerfile-language-server-nodejs`
+- **JSON** (`jsonls`): `npm i -g vscode-langservers-extracted`
+- **Python** (`pyright`): `npm i -g pyright`
+- **TypeScript/JS** (`ts_ls`): `npm i -g typescript-language-server typescript`
+- **Go** (`gopls`): `go install golang.org/x/tools/gopls@latest`
+- **Lua** (`lua_ls`): install via `:Mason` → `lua-language-server`
 
-  ```bash
-  sudo apt-get install clangd-13
-  ```
-  Then we must make it the default clangd (example with clangd-13):
-  ```bash
-  sudo update-alternatives --install /usr/bin/clangd clangd /usr/bin/clangd-13 100
-  ```
-
-  **NOTE**: On MacOS `clang` is installed through XCode, and you probably don't need to do anything else. You can check this by running `clang --version` from the terminal.
-
-- **Docker**: dockerls
-
-  ```bash
-  npm i -g dockerfile-language-server-nodejs
-  ```
-
-- **Julia**: julials
-
-  ```bash
-  julia --project=~/.julia/environments/nvim-lspconfig -e 'using Pkg; Pkg.add("LanguageServer")'
-  ```
-
-- **JSON**: jsonls
-
-  ```bash
-  npm i -g vscode-langservers-extracted
-  ```
-
-- **Lua**: sumneko_lua
-  This one is a tricky one as you have to manually clone the repo and then compile it. I did not have any issues, but I did have to install ninja for this, which can be done through `apt install ninja-build`.
-
-  1. First clone:
-  ```bash
-  git clone https://github.com/sumneko/lua-language-server
-  cd lua-language-server
-  git submodule update --init --recursive
-  ```
-  2. Next we manually build the server binaries:
-  ```bash
-  cd 3rd/luamake
-  ./compile/install.sh
-  cd ../..
-  ./3rd/luamake/luamake rebuild
-  ```
-  The configuration file in the `lsp` folder for this server should reference these binaries and the root folder of the code. I've set it to `~/.local/share/nvim/site/lsp\_servers/sumneko` there is `sumneko_lua` there which is the Lua module used to hook into this one, be careful no to overwrite.
-
-- **Python**: pyright:
-
-  ```bash
-  npm i -g pyright
-  ```
-
-- **YAML**: yamlls
-
-  This install requires `yarn` to work
-
-  ```bash
-  yarn global add yaml-language-server
-  ```
-
-  For MacOS use `brew`:
-  ```
-  brew install yaml-language-server
-  ```
-
-If a module complains about the verion of node being too old (pyright will do this), then run the following:
+If npm complains about an old node version:
 ```bash
 sudo npm cache clean -f
 sudo npm install -g n
 sudo n stable
 ```
-Make sure to use the `-g` on all `npm` installs, otherwise the server won't be found.
 
-### Some further notes
+### Inline diagnostics
 
-Inline error messages are disabled in the current configuration. They create a lot of clutter. To enable them back, comment the code on line 34 of `lua/options.lua`. This is a `nvim` option related to it's `lsp` interface, not something provided by the servers themselves.
+Inline error messages are disabled by default (they create clutter). To re-enable, comment out the relevant line in `lua/options.lua` around line 34.
+
+## Harpoon
+
+[Harpoon](https://github.com/ThePrimeagen/harpoon) (v2) is configured for exact-position bookmarks — each bookmark remembers its file, line, **and** column.
+
+- Same file at different line/col positions creates distinct entries.
+- Selecting a bookmark always jumps to the exact saved position, even when the buffer is already open.
+- Display format: `filename:line:col`
+
+Config: `lua/plugins/harpoon.lua`
+
+## Telescope
+
+`<leader>ff` and `<leader>fg` resume their previous in-session picker state instead of always opening fresh. Switching between the two starts fresh (no cross-contamination).
+
+Config: `lua/telescope_resume.lua`, `lua/plugins/telescope.lua`
+
+## Auto-completion
+
+`nvim-cmp` attaches language servers to buffers. The common `on_attach` function in `lua/lsp/utils.lua` enables key mappings for code completion across all servers.
 
 ## AI-Powered Config Q&A (opencode_ask)
 
 Press `<leader>oc` to open an interactive Q&A interface. Ask questions about your Neovim config (keybindings, features, settings) and get instant answers powered by AI. The system:
 
-- Searches your `keymaps.lua`, `plugins.lua`, `options.lua`, and other config files
+- Searches `keymaps.lua`, `plugins.lua`, `options.lua`, and other config files
 - Caches answers locally for fast re-queries
 - Uses the `opencode` CLI with the `nvim-explorer` agent
 
-**Note**: Requires `opencode` CLI installed globally (`npm install -g @opencode-ai/cli`).
+**Requires** `opencode` CLI installed globally (`npm install -g @opencode-ai/cli`).
 
 ## OpenCode plugin patch (required)
 
-This config applies a local patch to `opencode.nvim` on install/update. The patch lives in `lua/plugins/opencode_patch.lua` and is applied in two places:
+This config applies a local patch to `opencode.nvim` on install/update. The patch lives in `lua/plugins/opencode_patch.lua` and is applied in:
 
 - `lua/plugins.lua` (plugin `run` hook)
 - `lua/plugins/opencode.lua` (runtime safety re-apply)
 
-### Why this patch is needed
+The patch adds safer window handling and extra interrupt keymaps (`<C-Esc>`, `<C-[>`).
 
-The upstream terminal behavior can break this workflow in a few edge cases:
-
-1. Closing/hiding the OpenCode terminal when it is the only window can leave the tab/window in a bad state.
-2. Interrupt shortcuts are too limited for fast interactive sessions.
-
-This patch adds:
-
-- safer window handling (`hide_or_replace_window`) so closing/hiding does not leave an unusable layout,
-- extra interrupt keymaps (`<C-Esc>` and `<C-[>`) in addition to the default interrupt key,
-- a safer close path when the OpenCode terminal is the last window.
-
-### Re-apply manually (if needed)
-
-If `opencode.nvim` is reinstalled or updated and behavior regresses:
+Re-apply manually if needed:
 
 ```vim
 :lua require("plugins.opencode_patch").apply()
@@ -254,44 +215,43 @@ Then restart Neovim.
 
 ## Web-dev Icons
 
-To visualize fancy icons and separators, a patched font must be installed. [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts) has many already patched and offers instructions on how to create new ones (I don't recommend). To install a patched font follow these instructions:
-1. Head to the [repo](https://github.com/ryanoasis/nerd-fonts) and download the font. I use Robot Mono.
-2. Copy the file to the relevant folder:
-  - Linux: `~/.local/share/fonts/`.
-  - MacOS: `/Library/Fonts'`.
-3. Change the font in the terminal emulator's settings to the patched font.
+Install a [Nerd Font](https://github.com/ryanoasis/nerd-fonts) for icons and separators:
 
-### Nerd Fonts with Kitty
+1. Download a font from the repo (e.g. Roboto Mono).
+2. Copy to:
+   - Linux: `~/.local/share/fonts/`
+   - macOS: `/Library/Fonts/`
+3. Change the terminal font to the patched font.
 
-If using `kitty` as default terminal, then the procedure above won't work. First, `kitty` does not support non-monospaced fonts due to how it renders text. Second, the fonts cannot be patched. In fact, kitty takes care of patching on it's own which is great. To install the fonts follow the instructions in this [blog](https://erwin.co/kitty-and-nerd-fonts/#symbols), which are straighforward.
+### Nerd Fonts with kitty
 
-TL;DR for `MacOS`:
-1. Download and install the fonts and put the file `Symbols-2048-em Nerd Font Complete.tff` (or whatever subset you decide to use) in the `Library/Fonts/` folder for system wide use, or the local variant.
-2. If the glyphs aren't displayed by default, then they can be specified manually by following the instructions.
-3. Refresh the fonts cache.
+kitty patches fonts itself. Follow this [guide](https://erwin.co/kitty-and-nerd-fonts/#symbols):
+
+1. Download `Symbols-2048-em Nerd Font Complete.ttf` and place in `Library/Fonts/`.
+2. Specify glyphs manually if they don't appear by default.
+3. Refresh font cache.
 
 ## Fix kitty
 
-We use kitty to launch tabs with custom command terminals. To enable it, create a file in your mac like this instructions https://sw.kovidgoyal.net/kitty/faq/#how-do-i-specify-command-line-options-for-kitty-on-macos with the content `kitty -o allow_remote_control=yes -o enabled_layouts=tall --listen-on unix:/tmp/kitten`, otherwise it wont work. Try it out by doing `<leader>t` in neovim.
+To use kitty-based tab terminals (`<leader>t`), create a kitty launch config per [these instructions](https://sw.kovidgoyal.net/kitty/faq/#how-do-i-specify-command-line-options-for-kitty-on-macos) with content:
 
-## TODO:
+```
+kitty -o allow_remote_control=yes -o enabled_layouts=tall --listen-on unix:/tmp/kitten
+```
+
+## TODO
 
 Improvements:
 - Only open diagnostics if there are any to show.
 
 LSPs to add:
-- LaTex: can use [texlab](https://github.com/latex-lsp/texlab).
+- LaTeX: [texlab](https://github.com/latex-lsp/texlab) (already in mason ensure_installed).
 
-Some pluggins to try:
-- Ranger integration: [Rnvimr](https://github.com/kevinhwang91/rnvimr). Use ranger in a floating buffer instead of as a tiled buffer.
-- Different file explorer: [ranger.vim](https://github.com/francoiscabrol/ranger.vim) which can be used to integrate the [Ranger](https://github.com/ranger/ranger) terminal file explorer into Vim.
-- Using GBrowse with fugitive: [rhubarb.vim](https://github.com/tpope/rhubarb.vim).
-- Prettier quickfix/localist: [trouble.nvim](https://github.com/folke/trouble.nvim).
-- Jupyter on Neovim: [jupytext.vim](https://github.com/mwouts/jupytext), [iron.nvim](https://github.com/hkupty/iron.nvim), [vim-textobj-hydrogen](https://github.com/GCBallesteros/vim-textobj-hydrogen). Check this [blog](https://www.maxwellrules.com/misc/nvim_jupyter.html) for more info.
-
+Plugins to try:
+- [Rnvimr](https://github.com/kevinhwang91/rnvimr): Ranger in a floating buffer.
+- [rhubarb.vim](https://github.com/tpope/rhubarb.vim): GBrowse support for fugitive.
+- [trouble.nvim](https://github.com/folke/trouble.nvim): Better quickfix/loclist UI.
 
 ## Attributions
 
-The structre of this config was based on [yashguptaz](https://github.com/yashguptaz/)'s [config](https://github.com/yashguptaz/nvy) and tutorial which helped me understand the basics of using Lua with Neovim.
-
-I've also stolen code from different sources which means it might be hard to acknowledge all of them explicitly though most of them are from the associated plugin's documentation.
+The structure of this config was based on [yashguptaz](https://github.com/yashguptaz/)'s [config](https://github.com/yashguptaz/nvy) and tutorial.

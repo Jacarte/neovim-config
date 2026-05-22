@@ -1,6 +1,16 @@
 local Terminal  = require('toggleterm.terminal').Terminal
 function _lazygit_toggle()
-  Terminal:new({ cmd = "lazygit", hidden = true, direction="float" }):toggle()
+  local editor = "nvim --server " .. vim.v.servername .. " --remote-wait"
+  Terminal:new({
+    cmd = "lazygit",
+    hidden = true,
+    direction = "float",
+    env = {
+      GIT_EDITOR = editor,
+      VISUAL = editor,
+      EDITOR = editor,
+    },
+  }):toggle()
 end
 
 local terminals = {}

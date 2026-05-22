@@ -10,7 +10,6 @@ local nvimbattery = {
 }
 
 local lsp_status = require('lsp-status');
-local lspconfig = require('lspconfig');
 
 lsp_status.register_progress()
 
