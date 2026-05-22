@@ -123,10 +123,10 @@ nnoremap("<leader>D", "<Cmd>lua vim.diagnostic.setloclist()<CR>")
 nnoremap("<leader><A-d>", "<Cmd>lua vim.diagnostic.setqflist()<CR>")
 
 -- Telescope
-nnoremap("<leader>ff", "<Cmd>lua require('telescope.builtin').find_files({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
+nnoremap("<leader>ff", "<Cmd>lua require('telescope_resume').find_files({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
 nnoremap("<leader>fhf","<Cmd>lua require('telescope.builtin').find_files({cwd = vim.fn.getcwd(-1, -1), hidden=true, prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
 nnoremap("<leader>fb", "<Cmd>Telescope buffers<CR>")
-nnoremap("<leader>fg", "<Cmd>lua require('telescope.builtin').live_grep({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
+nnoremap("<leader>fg", "<Cmd>lua require('telescope_resume').live_grep({cwd = vim.fn.getcwd(-1, -1), prompt_title = vim.fn.getcwd(-1, -1)})<CR>")
 nnoremap("<leader>fd", "<Cmd>ChangedFiles<CR>")
 nnoremap("<leader>fB", "<Cmd>ChangedFilesAgainstBranch<CR>")
 nnoremap("<leader>fM", "<Cmd>ChangedFilesAgainstBranchSelect<CR>")

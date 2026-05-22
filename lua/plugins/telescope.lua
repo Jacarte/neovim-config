@@ -35,6 +35,10 @@ mod = transform_mod(mod)
 
 require('telescope').setup({
   defaults = {
+    cache_picker = {
+      num_pickers = 2,
+      ignore_empty_prompt = false,
+    },
     sorting_strategy = "ascending",
     prompt_prefix = "🔍 ",
     path_display = { "truncate" },
