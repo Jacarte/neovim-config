@@ -1,4 +1,5 @@
-local Terminal  = require('toggleterm.terminal').Terminal
+local Terminal = require('toggleterm.terminal').Terminal
+
 function _lazygit_toggle()
   local editor = "nvim --server " .. vim.v.servername .. " --remote-wait"
   Terminal:new({
@@ -168,5 +169,3 @@ local sessionalTC = Terminal:new({cmd="colima ssh",  hidden = true, direction = 
 function _session_colima_toggle()
   sessionalTC:toggle()
 end
-
-

@@ -186,6 +186,27 @@ Config: `lua/telescope_resume.lua`, `lua/plugins/telescope.lua`
 
 `nvim-cmp` attaches language servers to buffers. The common `on_attach` function in `lua/lsp/utils.lua` enables key mappings for code completion across all servers.
 
+## Squire AI completion
+
+[Squire](https://github.com/jibinjacob09/squire.nvim) is configured here as a local AI completion layer backed by the OpenCode Go endpoint.
+
+- Manual trigger: `<C-Space>`
+- Terminal fallback trigger: `<C-@>`
+- Accept suggestion: `<C-l>`
+- Dismiss suggestion: `<Esc>`
+
+This setup supports multiline completions, but it strips model reasoning and leading blank lines before rendering the suggestion. In practice, that means the suggestion starts with code instead of explanation text or an empty first line.
+
+Auto-completion is implemented locally on top of Squire with a 400ms debounce after insert-mode text changes.
+
+- `:SquireAutoEnable` turns debounced auto-completion on.
+- `:SquireAutoDisable` turns debounced auto-completion off.
+- `:SquireHealthcheck` verifies that the local Squire provider can reach the API successfully.
+
+Auto-completion only runs for the configured filetypes in `lua/plugins/squire.lua`, and manual completion still works even when auto mode is disabled.
+
+Config: `lua/plugins/squire.lua`
+
 ## AI-Powered Config Q&A (opencode_ask)
 
 Press `<leader>oc` to open an interactive Q&A interface. Ask questions about your Neovim config (keybindings, features, settings) and get instant answers powered by AI. The system:

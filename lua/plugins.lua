@@ -370,7 +370,7 @@ return require('packer').startup(function(use)
     return 20
   end
 
-  use {"akinsho/toggleterm.nvim", tag = '*', config = function()
+  use {"akinsho/toggleterm.nvim", config = function()
     require("toggleterm").setup{
       shade_filetypes = {},
       size = sizer
@@ -445,5 +445,19 @@ return require('packer').startup(function(use)
   use {
     "folke/trouble.nvim"
   }
+
+  -- My own Copilot with opencode
+  use({
+    "jibinjacob09/squire.nvim",
+
+    requires = {
+      "nvim-lua/plenary.nvim",
+    },
+
+    config = function()
+      require("plugins.squire")
+    end,
+  })
+
 
 end)
