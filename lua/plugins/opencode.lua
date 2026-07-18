@@ -319,3 +319,50 @@ end, { desc = "Scroll opencode down" })
 
 vim.keymap.set("n", "+", "<C-a>", { desc = "Increment under cursor", noremap = true })
 vim.keymap.set("n", "-", "<C-x>", { desc = "Decrement under cursor", noremap = true })
+
+require("plugins.help_summary").setup({
+  trigger_key = "<leader>?",
+  sections = {
+    {
+      title = "Opencode",
+      entries = {
+        { key = "<C-a>", desc = "Ask opencode about current context" },
+        { key = "<C-x>", desc = "Open opencode action picker" },
+        { key = "<C-.> / <leader>oo", desc = "Toggle opencode UI" },
+        { key = "<leader>go", desc = "Send visual selection as context" },
+        { key = "<leader>goo", desc = "Send current line as context" },
+        { key = "<S-C-u>/<S-C-d>", desc = "Page up/down conversation history" },
+        { key = "<leader>?", desc = "Open this help summary" },
+      },
+    },
+    {
+      title = "Diff (Gitsigns)",
+      entries = {
+        { key = "[c", desc = "Previous hunk (or prev diff hunk)" },
+        { key = "]c", desc = "Next hunk (or next diff hunk)" },
+        { key = "<leader>hs", desc = "Stage selected hunk" },
+        { key = "<leader>hr", desc = "Reset selected hunk" },
+        { key = "<leader>hS", desc = "Stage entire buffer" },
+        { key = "<leader>hu", desc = "Undo stage of selected hunk" },
+        { key = "<leader>hR", desc = "Reset entire buffer" },
+        { key = "<leader>hp", desc = "Preview hunk" },
+        { key = "<leader>hb", desc = "Show blame for current line" },
+        { key = "<leader>tb", desc = "Toggle current-line blame" },
+        { key = "<leader>hd", desc = "Open full diff of current buffer" },
+        { key = "<leader>hD", desc = "Open diff against previous index" },
+        { key = "<leader>td", desc = "Toggle deleted lines" },
+      },
+    },
+    {
+      title = "Changed Files",
+      entries = {
+        { key = "<leader>fd", desc = "Open changed files picker" },
+        { key = "<leader>fB", desc = "Compare against branch" },
+        { key = "<leader>fM", desc = "Choose branch via picker" },
+        { key = "<leader>fR", desc = "Reset compare branch base" },
+        { key = "<leader>fn", desc = "Go to next changed file" },
+        { key = "<leader>fp", desc = "Go to previous changed file" },
+      },
+    },
+  },
+})

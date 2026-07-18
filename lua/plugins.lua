@@ -33,9 +33,6 @@ return require('packer').startup(function(use)
   -- Let Packer manage itself
   use({'wbthomason/packer.nvim', opt = true})
 
- -- lsp status
-
-  use('nvim-lua/lsp-status.nvim')
   -- Rust tools
   use({
     'mrcjkb/rustaceanvim',
@@ -148,17 +145,12 @@ return require('packer').startup(function(use)
     end,
   }
 
-  use{
-    'nvim-treesitter/nvim-treesitter', tag = 'v0.9.3',
-    config = function()
-      require('nvim-treesitter.configs').setup({
-        ensure_installed = { 'go', 'lua', 'typescript', 'javascript', 'json', 'yaml', 'html', 'css', 'bash', 'python', 'markdown', 'scala' },
-        highlight = {
-          enable = true,
-        },
-      })
-    end
-  }
+  use({
+    'nvim-treesitter/nvim-treesitter',
+    branch = 'main',
+    run = ':TSUpdate',
+    config = function() require('plugins.treesitter') end,
+  })
   use({
     'neovim/nvim-lspconfig',
     config = function() require('plugins.lspconfig') end
@@ -191,13 +183,6 @@ return require('packer').startup(function(use)
     },
     config = function() require('plugins.cmp') end,
   })
-
-  -- Treesitter
-  --use({
-  --  'nvim-treesitter/nvim-treesitter',
-  --  config = function() require('plugins.treesitter') end,
-  --  run = ':TSUpdate'
-  --})
 
   -- Snippets
   use {"L3MON4D3/LuaSnip", config = function() require('plugins.snippets') end}
@@ -447,17 +432,21 @@ return require('packer').startup(function(use)
   }
 
   -- My own Copilot with opencode
-  use({
-    "jibinjacob09/squire.nvim",
+  --use({
+  --  "jibinjacob09/squire.nvim",
 
-    requires = {
-      "nvim-lua/plenary.nvim",
-    },
+   -- requires = {
+   --   "nvim-lua/plenary.nvim",
+   -- },
 
-    config = function()
-      require("plugins.squire")
-    end,
-  })
+   -- config = function()
+   --   require("plugins.squire")
+  --  end,
+  --})
 
+
+  use{
+  "rafikdraoui/jj-diffconflicts"
+    }
 
 end)

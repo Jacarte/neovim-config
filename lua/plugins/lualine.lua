@@ -9,12 +9,18 @@ local nvimbattery = {
   color = { fg = 'ffffff', gui='bold' },
 }
 
-local lsp_status = require('lsp-status');
-
-lsp_status.register_progress()
+vim.api.nvim_create_autocmd('LspProgress', {
+  callback = function()
+    vim.cmd('redrawstatus')
+  end,
+})
 
 local function lsp()
-    return require('lsp-status').status()
+  if vim.ui and vim.ui.progress_status then
+    return vim.ui.progress_status()
+  end
+
+  return vim.lsp.status()
 end
 
 require('lualine').setup({
@@ -27,7 +33,7 @@ require('lualine').setup({
   },
   sections = {
     lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff', 'lsp_status', 'selectioncount'},
+    lualine_b = {'branch', 'diff', 'selectioncount'},
     lualine_c = {
       'filetype',
       {

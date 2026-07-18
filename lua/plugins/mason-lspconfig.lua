@@ -5,15 +5,17 @@ require("mason-lspconfig").setup {
       "clangd",
       "jsonls",
       -- Rust implemented is always better than node :|
-      "pylyzer",
+      "pyright",
       -- "julials",
-      -- "pyright",
        "rust_analyzer",
       -- "sumneko_lua",
        "texlab",
        "ts_ls",
        -- go
        "gopls"
+     },
+    automatic_enable = {
+      exclude = { "pylyzer" },
     },
     automatic_installation= true,
 }

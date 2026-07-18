@@ -6,7 +6,10 @@ This readme exists so I don't have to remember how to do all these things when s
 
 ## Requirements
 
-- Neovim **≥ 0.11** (uses `vim.lsp.config` / `vim.lsp.enable` native LSP API)
+- Neovim **>= 0.12** (required by nvim-treesitter `main` and the native LSP API used here)
+- [`tree-sitter-cli`](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md) **>= 0.26.1** — provides the `tree-sitter` command; install it through the system package manager, not npm; this setup is currently verified with **0.26.11**
+- `curl` and `tar` — required to download and extract parsers
+- A C compiler — required to build parsers
 - `npm` / `node` — most language servers install via npm
 - `opencode` — for the AI-powered config Q&A feature
 
@@ -39,6 +42,9 @@ npm install -g @opencode-ai/cli
 ```bash
 # Stable
 brew install neovim
+
+# tree-sitter-cli (required by nvim-treesitter)
+brew install tree-sitter-cli
 
 # Nightly
 brew install --HEAD neovim
