@@ -336,25 +336,7 @@ require("plugins.help_summary").setup({
       },
     },
     {
-      title = "Diff (Gitsigns)",
-      entries = {
-        { key = "[c", desc = "Previous hunk (or prev diff hunk)" },
-        { key = "]c", desc = "Next hunk (or next diff hunk)" },
-        { key = "<leader>hs", desc = "Stage selected hunk" },
-        { key = "<leader>hr", desc = "Reset selected hunk" },
-        { key = "<leader>hS", desc = "Stage entire buffer" },
-        { key = "<leader>hu", desc = "Undo stage of selected hunk" },
-        { key = "<leader>hR", desc = "Reset entire buffer" },
-        { key = "<leader>hp", desc = "Preview hunk" },
-        { key = "<leader>hb", desc = "Show blame for current line" },
-        { key = "<leader>tb", desc = "Toggle current-line blame" },
-        { key = "<leader>hd", desc = "Open full diff of current buffer" },
-        { key = "<leader>hD", desc = "Open diff against previous index" },
-        { key = "<leader>td", desc = "Toggle deleted lines" },
-      },
-    },
-    {
-      title = "Changed Files",
+      title = "Changed Files (jj)",
       entries = {
         { key = "<leader>fd", desc = "Open changed files picker" },
         { key = "<leader>fB", desc = "Compare against branch" },
