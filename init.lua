@@ -5,6 +5,7 @@ require('options')
 require('keymaps')
 require('commands')
 require('plugins')
+require('plugins.conform_spec')
 require('themes')  -- Theme at the end, to prevent overwrite by other plugins
 
 
@@ -37,13 +38,3 @@ vim.cmd([[
     autocmd BufWritePost ~/.config/nvim/lua/*/*/*.lua source $MYVIMRC
   augroup END
 ]])
-
--- Auto format
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function()
-    vim.lsp.buf.format({ async = true })
-  end
-})
-
