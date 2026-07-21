@@ -276,6 +276,12 @@ return require('packer').startup(function(use)
       config = function() require('plugins.copilot') end
     })
   -- Formatting
+  use({
+    'stevearc/conform.nvim',
+    config = function()
+      require('plugins.conform').setup()
+    end,
+  })
   use 'tpope/vim-commentary'
   use 'tpope/vim-unimpaired'
   use 'tpope/vim-surround'

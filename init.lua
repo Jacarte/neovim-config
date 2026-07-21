@@ -7,7 +7,6 @@ require('commands')
 require('plugins')
 require('themes')  -- Theme at the end, to prevent overwrite by other plugins
 
-
 -- Disabled: Auto-change to file's directory (conflicts with project.nvim)
 -- vim.api.nvim_create_autocmd("BufEnter", {
 --   pattern = "*",
@@ -37,13 +36,3 @@ vim.cmd([[
     autocmd BufWritePost ~/.config/nvim/lua/*/*/*.lua source $MYVIMRC
   augroup END
 ]])
-
--- Auto format
-
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*",
-  callback = function()
-    vim.lsp.buf.format({ async = true })
-  end
-})
-

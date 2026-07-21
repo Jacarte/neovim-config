@@ -12,6 +12,7 @@ This readme exists so I don't have to remember how to do all these things when s
 - A C compiler — required to build parsers
 - `npm` / `node` — most language servers install via npm
 - `opencode` — for the AI-powered config Q&A feature
+- Optional external formatters for the languages you use: `biome`, `goimports` / `gofmt`, `black`, `rustfmt`, and `stylua`; Conform falls back to an attached LSP or a quiet no-op when they are unavailable
 
 ## Setting up
 
@@ -100,6 +101,7 @@ The file `init.lua` loads all modules. `plugins.lua` declares all plugins via [p
 | [packer](https://github.com/wbthomason/packer.nvim) | Plugin manager |
 | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) | LSP server definitions (used with `vim.lsp.config` native API) |
 | [mason](https://github.com/williamboman/mason.nvim) + [mason-lspconfig](https://github.com/williamboman/mason-lspconfig.nvim) | Install and manage LSP server binaries |
+| [conform.nvim](https://github.com/stevearc/conform.nvim) | External formatting and format-on-save |
 | [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) | Auto-complete |
 | [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) | Syntax highlighting |
 | [nvim-tree](https://github.com/nvim-tree/nvim-tree.lua) | File explorer |
@@ -147,6 +149,20 @@ Per-language configuration lives in `lua/lsp/`:
 | `lua/lsp/rust.lua` | rustaceanvim |
 
 The common `on_attach` function (key mappings, diagnostics) lives in `lua/lsp/utils.lua`.
+
+### Formatting
+
+[conform.nvim](https://github.com/stevearc/conform.nvim) formats synchronously on save with a 1000 ms timeout. A slow formatter can time out, leaving that save unformatted. Press `<leader>cf` to format the current buffer asynchronously without saving it. The `gq` operator uses Conform through `formatexpr` for range formatting.
+
+| Filetypes | Formatter |
+| --- | --- |
+| `javascript`, `javascriptreact`, `typescript`, `typescriptreact`, `json`, `jsonc`, `css`, `graphql` | `biome` |
+| `go` | `goimports`, falling back to `gofmt` |
+| `python` | `black` |
+| `rust` | `rustfmt` |
+| `lua` | `stylua` |
+
+Biome runs only when a parent directory contains `biome.json`, `biome.jsonc`, `.biome.json`, or `.biome.jsonc`; otherwise Conform skips it. If no configured external formatter is available, Conform falls back to LSP formatting when the attached LSP supports it. When ESLint attaches, `LspEslintFixAll` also applies configured fixes on save as a separate transform.
 
 ### Installing language server binaries
 

@@ -42,16 +42,6 @@ vim.g.rustaceanvim = {
 }
 local cmp = require("cmp")
 
-local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
-vim.api.nvim_create_autocmd("BufWritePre", {
-  pattern = "*.rs",
-  callback = function()
-    vim.lsp.buf.format({ timeout_ms = 200 })
-  end,
-  group = format_sync_grp,
-})
-
-
 vim.opt.updatetime = 100
 
 -- Show diagnostic popup on cursor hover
@@ -96,4 +86,3 @@ cmp.setup({
     { name = "buffer" },
   },
 })
-
