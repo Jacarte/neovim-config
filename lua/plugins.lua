@@ -432,14 +432,14 @@ return require('packer').startup(function(use)
     config = function() require("plugins.opencode") end,
   }
 
-  require("plugins.graphify").setup({
-    command = {
+  --require("plugins.graphify").setup({
+   -- command = {
       -- /Users/javcab/.local/bin/graphify
-      vim.fn.expand("~/.local/bin/graphify"),
-      "watch",
-      ".",
-    },
-  })
+    --  vim.fn.expand("~/.local/bin/graphify"),
+    --  "watch",
+    --  ".",
+   -- },
+  --})
 
   -- trouble
   use {
