@@ -388,6 +388,13 @@ return require('packer').startup(function(use)
     config = function() require("plugins.harpoon") end
   }
 
+  use {
+    "ChmaraX/herdr-nvim",
+    config = function()
+      require("plugins.herdr")
+    end,
+  }
+
   -- sidekick for AI helper
   --use {
   -- "folke/sidekick.nvim",
